@@ -141,7 +141,7 @@ const Header = () => {
             강화 분석실
           </Typography>
         </Button>
-        {/* <Button
+        <Button
           onClick={() => navigate("/")}
           disableRipple
           sx={{
@@ -174,7 +174,7 @@ const Header = () => {
           <Typography sx={{ fontFamily: "Galmuri11", fontSize: "14px" }}>
             마을원 현황
           </Typography>
-        </Button> */}
+        </Button>
       </Box>
     </Box>
   );

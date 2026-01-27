@@ -10,7 +10,6 @@ html,
 body,
 #root {
   height: 100%;
-  background-color: #ffffffff;
 }
 
 @font-face {

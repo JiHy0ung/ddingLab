@@ -1,11 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import LoadingSpinner from "../../../common/components/LoadingSpinner";
+import OhaasaSpinner from "../../../common/components/OhaasaSpinner";
 import { useOhaasa } from "../../../hooks/useOhaasa";
 import { zodiacMap } from "../../../constants/zodiacMap";
 import { styled } from "@mui/material/styles";
 
 const OhaasaContainer = styled(Box)({
-  width: "fit-content",
+  minHeight: "36rem",
+  minWidth: "15rem",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -94,7 +95,12 @@ const OhaasaRanking = () => {
 
   const finalDate = `${year}년 ${month}월 ${day}일`;
 
-  if (loading) return <LoadingSpinner />;
+  if (loading)
+    return (
+      <OhaasaContainer sx={{ padding: "1.625rem 2rem" }}>
+        <OhaasaSpinner />
+      </OhaasaContainer>
+    );
 
   return (
     <OhaasaContainer>

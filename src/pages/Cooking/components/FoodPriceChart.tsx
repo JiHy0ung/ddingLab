@@ -474,6 +474,8 @@ const CookingPriceChart = () => {
                 setFullPotLv(0);
               }}
               sx={{
+                width: "3rem",
+                height: "3rem",
                 color: "black",
                 transition: "all 0.4s ease",
                 "&:hover": {

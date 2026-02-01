@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const BubbleBox = styled(Box)({
-  maxWidth: "17rem",
+  // maxWidth: "17rem",
   position: "relative",
   padding: "1rem 1.25rem",
   backgroundColor: "#fff",

@@ -5,6 +5,7 @@ const AppLayout = React.lazy(() => import("../layout/AppLayout"));
 const LandingPage = React.lazy(() => import("../pages/Landing/LandingPage"));
 const CookingPage = React.lazy(() => import("../pages/Cooking/CookingPage"));
 const EnhancePage = React.lazy(() => import("../pages/Enhance/EnhancePage"));
+const AlchemyPage = React.lazy(() => import("../pages/Alchemy/AlchemyPage"));
 const LoginPage = React.lazy(() => import("../pages/Login/LoginPage"));
 const RegisterPage = React.lazy(() => import("../pages/Register/RegisterPage"));
 
@@ -16,6 +17,7 @@ const AppRouter = () => {
           <Route index element={<LandingPage />} />
           <Route path="cooking" element={<CookingPage />} />
           <Route path="enhance" element={<EnhancePage />} />
+          <Route path="alchemy" element={<AlchemyPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>

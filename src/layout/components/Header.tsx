@@ -40,11 +40,9 @@ const Header = () => {
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Box
-        onClick={() => navigate("/")}
-        sx={{ display: "flex", alignItems: "center", gap: 1 }}
-      >
+      <Box sx={{ display: "flex", alignItems: "center", gap: "3rem" }}>
         <Typography
+          onClick={() => navigate("/")}
           sx={{
             fontSize: { md: "2rem", sm: "1.875rem", xs: "1.625rem" },
             fontFamily: "Galmuri11",
@@ -57,111 +55,232 @@ const Header = () => {
         >
           제빵 연구소
         </Typography>
-        <Button
-          disableRipple
+        <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: 0.8,
-            color: "grey",
-            cursor: "pointer !important",
-            px: 1.5,
-            py: 1,
-            borderRadius: "14px",
-            "&:hover": {
-              color: "#14161f",
-              "& img": {
-                filter: "invert(0%)",
-              },
-            },
+            gap: "1.625rem",
           }}
         >
-          <Box
-            component="img"
-            src="https://unpkg.com/pixelarticons@1.8.0/svg/home.svg"
+          <Button
+            onClick={() => navigate("/enhance")}
+            disableRipple
             sx={{
-              height: "18px",
-              filter:
-                "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              minWidth: "1rem",
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.4rem",
+              color: "grey",
+              cursor: "pointer !important",
+              px: 0,
+              py: 1,
+              borderRadius: 0,
+              transition: "all 0.3s ease",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(transparent 90%, black 90%)",
+                opacity: 0,
+                zIndex: -1,
+                transition: "all 0.3s ease",
+              },
+              "&:hover::before": {
+                opacity: 1,
+              },
+              "&:hover": {
+                transform: "scale(1.02)",
+                backgroundColor: "transparent",
+                color: "#14161f",
+                "& img": {
+                  transition: "all 0.3s ease",
+                  filter: "invert(0%)",
+                },
+              },
             }}
-          />
-          <Typography
-            onClick={() => navigate("/")}
-            sx={{ fontFamily: "Galmuri11", fontSize: "14px" }}
           >
-            홈
-          </Typography>
-        </Button>
-        <Button
-          onClick={() => navigate("/cooking")}
-          disableRipple
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 0.8,
-            color: "grey",
-            cursor: "pointer !important",
-            px: 1.5,
-            py: 1,
-            borderRadius: "14px",
-            "&:hover": {
-              color: "#14161f",
-              "& img": {
-                filter: "invert(0%)",
-              },
-            },
-          }}
-        >
-          <Box
-            component="img"
-            src="https://unpkg.com/pixelarticons@1.8.0/svg/chart.svg"
+            <Box
+              component="img"
+              src="https://unpkg.com/pixelarticons@1.8.0/svg/home.svg"
+              sx={{
+                height: "18px",
+                filter:
+                  "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              }}
+            />
+            <Typography sx={{ fontFamily: "Galmuri11", fontSize: "0.8125rem" }}>
+              홈
+            </Typography>
+          </Button>
+          <Button
+            onClick={() => navigate("/cooking")}
+            disableRipple
             sx={{
-              height: "18px",
-              filter:
-                "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
-            }}
-          />
-          <Typography sx={{ fontFamily: "Galmuri11", fontSize: "14px" }}>
-            요리 리딩방
-          </Typography>
-        </Button>
-        <Button
-          onClick={() => navigate("/enhance")}
-          disableRipple
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 0.8,
-            color: "grey",
-            cursor: "pointer !important",
-            px: 1.5,
-            py: 1,
-            borderRadius: "14px",
-            "&:hover": {
-              color: "#14161f",
-              "& img": {
-                filter: "invert(0%)",
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.4rem",
+              color: "grey",
+              cursor: "pointer !important",
+              px: 0,
+              py: 1,
+              borderRadius: 0,
+              transition: "all 0.3s ease",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(transparent 90%, black 90%)",
+                opacity: 0,
+                zIndex: -1,
+                transition: "all 0.3s ease",
               },
-            },
-          }}
-        >
-          <Box
-            component="img"
-            src="https://unpkg.com/pixelarticons@1.8.0/svg/script-text.svg"
-            sx={{
-              height: "18px",
-              filter:
-                "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              "&:hover::before": {
+                opacity: 1,
+              },
+              "&:hover": {
+                transform: "scale(1.02)",
+                backgroundColor: "transparent",
+                color: "#14161f",
+                "& img": {
+                  transition: "all 0.3s ease",
+                  filter: "invert(0%)",
+                },
+              },
             }}
-          />
-          <Typography sx={{ fontFamily: "Galmuri11", fontSize: "14px" }}>
-            강화 분석실
-          </Typography>
-        </Button>
-        <Button
+          >
+            <Box
+              component="img"
+              src="https://unpkg.com/pixelarticons@1.8.0/svg/chart.svg"
+              sx={{
+                height: "18px",
+                filter:
+                  "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              }}
+            />
+            <Typography sx={{ fontFamily: "Galmuri11", fontSize: "0.8125rem" }}>
+              요리 리딩방
+            </Typography>
+          </Button>
+          <Button
+            onClick={() => navigate("/enhance")}
+            disableRipple
+            sx={{
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.4rem",
+              color: "grey",
+              cursor: "pointer !important",
+              px: 0,
+              py: 1,
+              borderRadius: 0,
+              transition: "all 0.3s ease",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(transparent 90%, black 90%)",
+                opacity: 0,
+                zIndex: -1,
+                transition: "all 0.3s ease",
+              },
+              "&:hover::before": {
+                opacity: 1,
+              },
+              "&:hover": {
+                transform: "scale(1.02)",
+                backgroundColor: "transparent",
+                color: "#14161f",
+                "& img": {
+                  transition: "all 0.3s ease",
+                  filter: "invert(0%)",
+                },
+              },
+            }}
+          >
+            <Box
+              component="img"
+              src="https://unpkg.com/pixelarticons@1.8.0/svg/script-text.svg"
+              sx={{
+                height: "18px",
+                filter:
+                  "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              }}
+            />
+            <Typography sx={{ fontFamily: "Galmuri11", fontSize: "0.8125rem" }}>
+              강화 분석실
+            </Typography>
+          </Button>
+          <Button
+            disabled
+            onClick={() => navigate("/cooking")}
+            disableRipple
+            sx={{
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.4rem",
+              color: "grey",
+              cursor: "pointer !important",
+              px: 0,
+              py: 1,
+              borderRadius: 0,
+              transition: "all 0.3s ease",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(transparent 90%, black 90%)",
+                opacity: 0,
+                zIndex: -1,
+                transition: "all 0.3s ease",
+              },
+              "&:hover::before": {
+                opacity: 1,
+              },
+              "&:hover": {
+                transform: "scale(1.02)",
+                backgroundColor: "transparent",
+                color: "#14161f",
+                "& img": {
+                  transition: "all 0.3s ease",
+                  filter: "invert(0%)",
+                },
+              },
+            }}
+          >
+            <Box
+              component="img"
+              src="https://unpkg.com/pixelarticons@1.8.0/svg/anchor.svg"
+              sx={{
+                height: "18px",
+                filter:
+                  "invert(95%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
+              }}
+            />
+            <Typography
+              sx={{
+                fontFamily: "Galmuri11",
+                fontSize: "0.8125rem",
+                letterSpacing: -1,
+              }}
+            >
+              해양 연금실
+            </Typography>
+          </Button>
+        </Box>
+        {/* <Button
           onClick={() => navigate("/")}
           disableRipple
           sx={{
@@ -171,9 +290,8 @@ const Header = () => {
             gap: 0.8,
             color: "grey",
             cursor: "pointer !important",
-            px: 1.5,
+            px: 0,
             py: 1,
-            borderRadius: "14px",
             "&:hover": {
               color: "#14161f",
               "& img": {
@@ -191,10 +309,10 @@ const Header = () => {
                 "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
             }}
           />
-          <Typography sx={{ fontFamily: "Galmuri11", fontSize: "14px" }}>
+          <Typography sx={{ fontFamily: "Galmuri11", fontSize: "0.8125rem" }}>
             마을원 현황
           </Typography>
-        </Button>
+        </Button> */}
       </Box>
       <Box
         sx={{
@@ -207,12 +325,13 @@ const Header = () => {
           <>
             <IconButton
               sx={{
-                height: "2.25rem",
-                width: "2.25rem",
+                height: "2.5rem",
+                width: "2.5rem",
                 padding: 0,
                 background: "#cacacaff",
                 borderRadius: "50%",
                 overflow: "hidden",
+                border: "1.5px solid black",
               }}
               onClick={(e) => setAnchorEl(e.currentTarget)}
             >
@@ -233,10 +352,12 @@ const Header = () => {
               onClose={() => setAnchorEl(null)}
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
+              disableScrollLock
               PaperProps={{
                 sx: {
                   mt: 1,
                   borderRadius: 0,
+                  transition: "all 0.3s ease",
                   minWidth: "120px",
                   backgroundColor: "#f5f5f5ff",
                   border: "2px solid black",
@@ -244,7 +365,12 @@ const Header = () => {
                 },
               }}
             >
-              <Box sx={{ padding: "6px 16px" }}>
+              <Box
+                sx={{
+                  padding: "0.5rem 1rem 1rem 1rem",
+                  borderBottom: "1px solid #bebebeff",
+                }}
+              >
                 <Box
                   sx={{
                     display: "flex",

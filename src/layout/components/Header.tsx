@@ -1,17 +1,40 @@
-import { Box, Button, Typography } from "@mui/material";
-import { ChefHat, Gavel, House } from "lucide-react";
-import React from "react";
+import {
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user, userinfo, loading, signOut } = useAuth();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (user) {
+      console.log("✅ 로그인 상태");
+      console.log("auth user:", user);
+      console.log("userinfo:", userinfo);
+    } else {
+      console.log("❌ 로그인 안 됨");
+    }
+  }, [user, userinfo, loading]);
+
   return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        px: 2.5,
+        px: 3,
         py: 1.5,
         backgroundColor: "rgba(255, 255, 255, 0.7)",
         backdropFilter: "blur(10px)",
@@ -20,7 +43,7 @@ const Header = () => {
     >
       <Box
         onClick={() => navigate("/")}
-        sx={{ display: "block", alignItems: "center", gap: 0.5 }}
+        sx={{ display: "flex", alignItems: "center", gap: 1 }}
       >
         <Typography
           sx={{
@@ -35,8 +58,6 @@ const Header = () => {
         >
           제빵 연구소
         </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
         <Button
           disableRipple
           sx={{
@@ -175,6 +196,100 @@ const Header = () => {
             마을원 현황
           </Typography>
         </Button>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {user ? (
+          <>
+            <IconButton
+              sx={{
+                height: "2.25rem",
+                width: "2.25rem",
+                padding: 0,
+                background: "#cacacaff",
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+            >
+              <Box
+                component="img"
+                src={`https://cravatar.eu/helmavatar/${userinfo?.minecraft_id}`}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </IconButton>
+
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={() => setAnchorEl(null)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              PaperProps={{
+                sx: {
+                  mt: 1,
+                  borderRadius: 0,
+                  minWidth: "120px",
+                  backgroundColor: "#f5f5f5ff",
+                  border: "2px solid black",
+                  boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
+                },
+              }}
+            >
+              <Box>
+                {userinfo?.username}
+                {userinfo?.minecraft_id}
+                {userinfo?.zodiac}
+              </Box>
+              <MenuItem
+                sx={{
+                  display: "flex",
+                  gap: "0.35rem",
+                }}
+                onClick={async () => {
+                  setAnchorEl(null);
+                  await signOut();
+                  navigate("/");
+                }}
+              >
+                <Box
+                  component="img"
+                  src="https://unpkg.com/pixelarticons@1.8.0/svg/logout.svg"
+                  sx={{
+                    height: "1.25rem",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.75rem",
+                    fontFamily: "Galmuri11",
+                  }}
+                >
+                  로그아웃
+                </Typography>
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <IconButton onClick={() => navigate("/login")}>
+            <Box
+              component="img"
+              src="https://unpkg.com/pixelarticons@1.8.0/svg/login.svg"
+              sx={{
+                height: "18px",
+              }}
+            />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );

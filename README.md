@@ -14,3 +14,149 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+```
+dding
+├─ README.md
+├─ api
+│  └─ ohaasa.ts
+├─ eslint.config.js
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+│  └─ vite.svg
+├─ src
+│  ├─ App.css
+│  ├─ App.tsx
+│  ├─ assets
+│  │  ├─ enrichments
+│  │  │  ├─ high_enrichments.png
+│  │  │  ├─ ingredients
+│  │  │  │  ├─ AmethystBlock.png
+│  │  │  │  ├─ CobbleStoneBundle.png
+│  │  │  │  ├─ CooperBlock.png
+│  │  │  │  ├─ Corum.png
+│  │  │  │  ├─ DeepslateStoneBundle.png
+│  │  │  │  ├─ DiamondBlock.png
+│  │  │  │  ├─ GoldBlock.png
+│  │  │  │  ├─ IronBlock.png
+│  │  │  │  ├─ LapisLazuliBlock.png
+│  │  │  │  ├─ Lifton.png
+│  │  │  │  ├─ RedStoneBlock.png
+│  │  │  │  └─ Serent.png
+│  │  │  ├─ low_enrichments.png
+│  │  │  └─ middle_enrichments.png
+│  │  ├─ food
+│  │  │  ├─ common
+│  │  │  │  ├─ garlic_cake.png
+│  │  │  │  ├─ onion_rings.png
+│  │  │  │  └─ tomato_spaghetti.png
+│  │  │  ├─ epic
+│  │  │  │  ├─ deep_cream_pane.png
+│  │  │  │  ├─ tomato_lasagna.png
+│  │  │  │  └─ triple_beef_rib_skewers.png
+│  │  │  ├─ ingredients
+│  │  │  │  ├─ base
+│  │  │  │  │  ├─ garlic_base.png
+│  │  │  │  │  ├─ onion_base.png
+│  │  │  │  │  └─ tomato_base.png
+│  │  │  │  ├─ basics
+│  │  │  │  │  ├─ butter_piece.png
+│  │  │  │  │  ├─ cheese_piece.png
+│  │  │  │  │  ├─ cooking_milk.png
+│  │  │  │  │  ├─ cooking_salt.png
+│  │  │  │  │  ├─ oil.png
+│  │  │  │  │  └─ wheat_dough.png
+│  │  │  │  ├─ crops
+│  │  │  │  │  ├─ beet_bundle.png
+│  │  │  │  │  ├─ carrot_bundle.png
+│  │  │  │  │  ├─ potato_bundle.png
+│  │  │  │  │  ├─ pumpkin_bundle.png
+│  │  │  │  │  ├─ sugar_cube.png
+│  │  │  │  │  ├─ sweet_berries_bundle.png
+│  │  │  │  │  └─ watermelon_bundle.png
+│  │  │  │  ├─ fruits
+│  │  │  │  │  ├─ coconut.png
+│  │  │  │  │  └─ pineapple.png
+│  │  │  │  └─ meats
+│  │  │  │     ├─ beef_ribs.png
+│  │  │  │     ├─ beef_sirloin.png
+│  │  │  │     ├─ chicken.png
+│  │  │  │     ├─ chicken_breast.png
+│  │  │  │     ├─ chicken_drumstick.png
+│  │  │  │     ├─ lamb_ribs.png
+│  │  │  │     ├─ lamb_shoulder.png
+│  │  │  │     ├─ mutton.png
+│  │  │  │     ├─ pork.png
+│  │  │  │     ├─ pork_belly.png
+│  │  │  │     ├─ pork_shoulder.png
+│  │  │  │     └─ steak.png
+│  │  │  ├─ normal
+│  │  │  │  ├─ garlic_lamb_rib_hotdog.png
+│  │  │  │  ├─ pork_belly_tomato_stew.png
+│  │  │  │  ├─ roast_chicken_pie.png
+│  │  │  │  ├─ sweet_cereals.png
+│  │  │  │  └─ triple_flavor_ice_cream.png
+│  │  │  └─ rare
+│  │  │     ├─ onion_soup.png
+│  │  │     ├─ pork_belly_steamed_with_herbs.png
+│  │  │     ├─ sweet_chicken_hamburger.png
+│  │  │     └─ tomato_pineapple_pizza.png
+│  │  └─ hero
+│  │     └─ dding_hero.png
+│  ├─ common
+│  │  └─ components
+│  │     └─ OhaasaSpinner.tsx
+│  ├─ constants
+│  │  ├─ enhancementData.ts
+│  │  ├─ foodPriceData.ts
+│  │  ├─ foodRecipeData.ts
+│  │  └─ zodiacMap.ts
+│  ├─ hooks
+│  │  └─ useOhaasa.ts
+│  ├─ index.css
+│  ├─ layout
+│  │  ├─ AppLayout.tsx
+│  │  └─ components
+│  │     └─ Header.tsx
+│  ├─ lib
+│  │  └─ supabase.ts
+│  ├─ main.tsx
+│  ├─ models
+│  │  ├─ Food.ts
+│  │  └─ User.ts
+│  ├─ pages
+│  │  ├─ Cooking
+│  │  │  ├─ CookingPage.tsx
+│  │  │  └─ components
+│  │  │     ├─ FoodPriceChart.tsx
+│  │  │     └─ FoodRecipe.tsx
+│  │  ├─ Enhance
+│  │  │  ├─ EnhancePage.tsx
+│  │  │  └─ components
+│  │  │     ├─ EnhanceTable.tsx
+│  │  │     ├─ Enrichments.tsx
+│  │  │     └─ ToolEffectTable.tsx
+│  │  ├─ Landing
+│  │  │  ├─ LandingPage.tsx
+│  │  │  └─ components
+│  │  │     ├─ Hero.tsx
+│  │  │     ├─ NoticeBoard.tsx
+│  │  │     ├─ OhaasaRanking.tsx
+│  │  │     └─ SpeechBubble.tsx
+│  │  ├─ Login
+│  │  │  └─ LoginPage.tsx
+│  │  └─ Register
+│  │     └─ RegisterPage.tsx
+│  ├─ routes
+│  │  ├─ AppRouter.tsx
+│  │  ├─ PrivateRouter.tsx
+│  │  └─ PublicRouter.tsx
+│  └─ stores
+│     └─ foodStore.ts
+├─ tsconfig.json
+├─ tsconfig.node.json
+└─ vite.config.ts
+
+```

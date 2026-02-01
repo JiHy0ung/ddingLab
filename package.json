@@ -15,6 +15,7 @@
     "@hackernoon/pixel-icon-library": "^1.0.6",
     "@mui/material": "^7.3.5",
     "@mui/x-data-grid": "^8.21.0",
+    "@supabase/supabase-js": "^2.93.3",
     "axios": "^1.13.3",
     "cheerio": "^1.2.0",
     "lucide-react": "^0.553.0",

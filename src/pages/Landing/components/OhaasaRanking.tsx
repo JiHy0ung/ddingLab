@@ -3,6 +3,7 @@ import OhaasaSpinner from "../../../common/components/OhaasaSpinner";
 import { useOhaasa } from "../../../hooks/useOhaasa";
 import { zodiacMap } from "../../../constants/zodiacMap";
 import { styled } from "@mui/material/styles";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const OhaasaContainer = styled(Box)({
   minHeight: "36rem",
@@ -86,6 +87,7 @@ const OhaasaText = styled(Typography)({
 
 const OhaasaRanking = () => {
   const { data, loading } = useOhaasa();
+  const { userinfo } = useAuth();
 
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
@@ -116,6 +118,8 @@ const OhaasaRanking = () => {
           else if (item.rank === 2) color = "#C0C0C0";
           else if (item.rank === 3) color = "#cf7a24ff";
 
+          const isUserZodiac = userinfo?.zodiac === zodiacMap[item.signId];
+
           return (
             <Box
               key={item.rank}
@@ -129,7 +133,9 @@ const OhaasaRanking = () => {
               <OhaasaRankingText sx={{ color }}>
                 {item.rank}위
               </OhaasaRankingText>
-              <OhaasaText>{zodiacMap[item.signId] ?? "알 수 없음"}</OhaasaText>
+              <OhaasaText sx={{ color: isUserZodiac ? "#ed0707ff" : "black" }}>
+                {zodiacMap[item.signId] ?? "알 수 없음"}
+              </OhaasaText>
             </Box>
           );
         })}

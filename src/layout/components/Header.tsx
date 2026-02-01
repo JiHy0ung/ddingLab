@@ -14,7 +14,6 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, userinfo, loading, signOut } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
     if (loading) return;
@@ -245,10 +244,47 @@ const Header = () => {
                 },
               }}
             >
-              <Box>
-                {userinfo?.username}
-                {userinfo?.minecraft_id}
-                {userinfo?.zodiac}
+              <Box sx={{ padding: "6px 16px" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={`https://cravatar.eu/helmavatar/${userinfo?.minecraft_id}`}
+                    sx={{
+                      width: "2.25rem",
+                      height: "2.25rem",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "0.875rem",
+                        fontFamily: "Galmuri11",
+                        fontWeight: "900",
+                      }}
+                    >
+                      {userinfo?.username}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.75rem",
+                        fontFamily: "Galmuri11",
+                      }}
+                    >
+                      {userinfo?.zodiac}
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
               <MenuItem
                 sx={{

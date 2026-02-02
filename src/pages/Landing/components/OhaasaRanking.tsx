@@ -141,8 +141,6 @@ const OhaasaRanking = () => {
 
   const finalDate = `${year}년 ${month}월 ${day}일`;
 
-  console.log("data", data);
-
   if (loading)
     return (
       <OhaasaContainer sx={{ padding: "1.625rem 2rem" }}>

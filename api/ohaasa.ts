@@ -31,11 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 이미 오늘 데이터 가져왔으면 캐시 사용
     if (cachedData && lastFetchedKey === todayKey) {
-      console.log("캐시 사용:", todayKey);
+      // console.log("캐시 사용:", todayKey);
       return res.status(200).json(cachedData);
     }
 
-    console.log("오하아사 운세 새로 갱신:", todayKey);
+    // console.log("오하아사 운세 새로 갱신:", todayKey);
 
     const url = "https://www.asahi.co.jp/data/ohaasa2020/horoscope.json";
     const response = await axios.get<HoroscopeEntry[]>(url);

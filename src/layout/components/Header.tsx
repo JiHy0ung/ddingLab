@@ -7,7 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { styled } from "@mui/material/styles";
@@ -132,7 +132,7 @@ const MobileMenuButton = styled(Button)({
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, userinfo, loading, signOut } = useAuth();
+  const { user, userinfo, signOut } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [open, setOpen] = useState(false);
@@ -144,18 +144,6 @@ const Header = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (loading) return;
-
-    if (user) {
-      console.log("✅ 로그인 상태");
-      console.log("auth user:", user);
-      console.log("userinfo:", userinfo);
-    } else {
-      console.log("❌ 로그인 안 됨");
-    }
-  }, [user, userinfo, loading]);
 
   const DrawerList = (
     <DrawerBox>

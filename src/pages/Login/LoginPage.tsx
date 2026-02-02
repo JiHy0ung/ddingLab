@@ -2,6 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const LoginContainer = styled(Box)({
   width: "100%",
@@ -29,6 +30,8 @@ const ForgotPassWordText = styled(Button)({});
 const LoginPage = () => {
   const { signIn } = useAuth();
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,6 +46,8 @@ const LoginPage = () => {
       setLoading(true);
       await signIn(email, password);
       // 성공 시 → AuthContext에서 session 감지 후 자동 처리됨
+
+      navigate("/");
     } catch (e: any) {
       alert(e.message || "로그인에 실패했습니다");
     } finally {

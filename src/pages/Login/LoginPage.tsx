@@ -37,7 +37,8 @@ const LoginBox = styled(Box)({
   alignItems: "center",
 });
 
-const EmailInputBox = styled(TextField)({
+// 공통 스타일 객체
+const commonInputStyles = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -46,9 +47,21 @@ const EmailInputBox = styled(TextField)({
 
   "& .MuiInputBase-input": {
     height: "2rem",
-    width: "16.5rem",
     fontSize: "0.75rem",
     padding: 0,
+    "&:-webkit-autofill": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+      WebkitTextFillColor: "#000",
+    },
+    "&:-webkit-autofill:hover": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
+    "&:-webkit-autofill:focus": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
+    "&:-webkit-autofill:active": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
   },
   "& .MuiInputBase-root": {
     padding: "0.5rem 0.5rem 0.5rem 1rem",
@@ -56,6 +69,9 @@ const EmailInputBox = styled(TextField)({
     borderRadius: 0,
     backgroundColor: "#ffffffff",
     boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
+    "&.Mui-focused": {
+      backgroundColor: "#ffffffff",
+    },
   },
 
   "& .MuiOutlinedInput-notchedOutline": {
@@ -66,41 +82,25 @@ const EmailInputBox = styled(TextField)({
     borderColor: "#000",
   },
 
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#000",
+    borderWidth: "2px",
+  },
+};
+
+const EmailInputBox = styled(TextField)({
+  ...commonInputStyles,
+  "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
+    width: "16.5rem",
   },
 });
 
 const PassWordInputBox = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "14rem",
-    fontSize: "0.75rem",
-    padding: 0,
-  },
-  "& .MuiInputBase-root": {
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-  },
-
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "2px solid black",
-  },
-
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
   },
 });
 
@@ -213,23 +213,13 @@ const LoginPage = () => {
                   onClick={() => setShowPassword((prev) => !prev)}
                   edge="end"
                 >
-                  {showPassword ? (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye-closed.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  )}
+                  <Box
+                    component="img"
+                    src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+                      showPassword ? "eye" : "eye-closed"
+                    }.svg`}
+                    sx={{ height: "1rem" }}
+                  />
                 </IconButton>
               </InputAdornment>
             ),

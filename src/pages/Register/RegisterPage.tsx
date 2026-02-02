@@ -40,7 +40,8 @@ const RegisterTitle = styled(Typography)({
   letterSpacing: -1,
 });
 
-const MinecraftIdInputBox = styled(TextField)({
+// 공통 스타일 객체
+const commonInputStyles = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -49,16 +50,31 @@ const MinecraftIdInputBox = styled(TextField)({
 
   "& .MuiInputBase-input": {
     height: "2rem",
-    width: "14rem",
     fontSize: "0.75rem",
     padding: 0,
+    "&:-webkit-autofill": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+      WebkitTextFillColor: "#000",
+    },
+    "&:-webkit-autofill:hover": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
+    "&:-webkit-autofill:focus": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
+    "&:-webkit-autofill:active": {
+      WebkitBoxShadow: "0 0 0 1000px white inset",
+    },
   },
   "& .MuiInputBase-root": {
-    padding: "0.5rem 0.875rem 0.5rem 1rem",
+    padding: "0.5rem 0.5rem 0.5rem 1rem",
     fontFamily: "Galmuri11",
     borderRadius: 0,
     backgroundColor: "#ffffffff",
     boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
+    "&.Mui-focused": {
+      backgroundColor: "#ffffffff",
+    },
   },
 
   "& .MuiOutlinedInput-notchedOutline": {
@@ -69,198 +85,65 @@ const MinecraftIdInputBox = styled(TextField)({
     borderColor: "#000",
   },
 
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#000",
+    borderWidth: "2px",
+  },
+};
+
+const MinecraftIdInputBox = styled(TextField)({
+  ...commonInputStyles,
+  "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
+    width: "14.25rem",
   },
 });
 
 const UserNameInputBox = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
-    height: "2rem",
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "16.5rem",
-    fontSize: "0.75rem",
-    padding: 0,
-  },
-  "& .MuiInputBase-root": {
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-  },
-
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "2px solid black",
-  },
-
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
   },
 });
 
 const EmailInputBox = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
-    height: "2rem",
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "16.5rem",
-    fontSize: "0.75rem",
-    padding: 0,
-  },
-  "& .MuiInputBase-root": {
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-  },
-
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "2px solid black",
-  },
-
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
   },
 });
 
 const PassWordInputBox = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "14rem",
-    fontSize: "0.75rem",
-    padding: 0,
-  },
-  "& .MuiInputBase-root": {
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-  },
-
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "2px solid black",
-  },
-
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
   },
 });
 
 const PassWordConfirmInputBox = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "14rem",
-    fontSize: "0.75rem",
-    padding: 0,
-  },
-  "& .MuiInputBase-root": {
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-  },
-
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "2px solid black",
-  },
-
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
   },
 });
 
 const ZodiacSelect = styled(TextField)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "18rem",
-  marginBottom: "0.75rem",
-
+  ...commonInputStyles,
   "& .MuiInputBase-input": {
+    ...commonInputStyles["& .MuiInputBase-input"],
     width: "13rem",
-    height: "2rem",
-    fontSize: "0.75rem",
-    padding: 0,
   },
   "& .MuiInputBase-root": {
+    ...commonInputStyles["& .MuiInputBase-root"],
     height: "2.875rem",
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
-    fontFamily: "Galmuri11",
-    borderRadius: 0,
-    backgroundColor: "#ffffffff",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
   },
   "& .MuiOutlinedInput-notchedOutline": {
     border: "2px solid black",
     borderRadius: 0,
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#000",
-  },
-
-  // Menu 스타일
-  "& .MuiMenu-paper": {
-    borderRadius: 0,
-    border: "2px solid black",
-    boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-    marginTop: "0.25rem",
-  },
-
-  // MenuItem 스타일
-  "& .MuiMenuItem-root": {
-    fontFamily: "Galmuri11",
-    fontSize: "0.8rem",
-    "&:hover": {
-      backgroundColor: "#bdff66ff",
-    },
-    "&.Mui-selected": {
-      backgroundColor: "#bdff66ff",
-      "&:hover": {
-        backgroundColor: "#bdff66ff",
-      },
-    },
   },
 });
 
@@ -328,6 +211,7 @@ const RegisterPage = () => {
                   }}
                   alt="Minecraft Avatar"
                   sx={{
+                    filter: "drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))",
                     width: "1.625rem",
                     height: "1.625rem",
                   }}
@@ -347,7 +231,7 @@ const RegisterPage = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <PassWordInputBox
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -359,30 +243,20 @@ const RegisterPage = () => {
                   onClick={() => setShowPassword((prev) => !prev)}
                   edge="end"
                 >
-                  {showPassword ? (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye-closed.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  )}
+                  <Box
+                    component="img"
+                    src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+                      showPassword ? "eye" : "eye-closed"
+                    }.svg`}
+                    sx={{ height: "1rem" }}
+                  />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
         <PassWordConfirmInputBox
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="비밀번호 확인"
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -394,23 +268,13 @@ const RegisterPage = () => {
                   onClick={() => setShowPassword((prev) => !prev)}
                   edge="end"
                 >
-                  {showPassword ? (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      component="img"
-                      src="https://unpkg.com/pixelarticons@1.8.0/svg/eye-closed.svg"
-                      sx={{
-                        height: "1rem",
-                      }}
-                    />
-                  )}
+                  <Box
+                    component="img"
+                    src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+                      showPassword ? "eye" : "eye-closed"
+                    }.svg`}
+                    sx={{ height: "1rem" }}
+                  />
                 </IconButton>
               </InputAdornment>
             ),

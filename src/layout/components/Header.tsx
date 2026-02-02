@@ -278,7 +278,7 @@ const Header = () => {
           </MobileLoginButton>
         )}
       </MobileAuthBox>
-      <MobileMenuButton onClick={() => navigate("/enhance")} disableRipple>
+      <MobileMenuButton onClick={() => navigate("/")} disableRipple>
         <Box
           component="img"
           src="https://unpkg.com/pixelarticons@1.8.0/svg/home.svg"
@@ -415,7 +415,7 @@ const Header = () => {
         </Typography>
         <DesktopHeaderMenu>
           <Button
-            onClick={() => navigate("/enhance")}
+            onClick={() => navigate("/")}
             disableRipple
             sx={{
               minWidth: "1rem",

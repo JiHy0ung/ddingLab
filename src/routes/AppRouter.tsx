@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
+import PublicRoute from "./PublicRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const AppLayout = React.lazy(() => import("../layout/AppLayout"));
 const LandingPage = React.lazy(() => import("../pages/Landing/LandingPage"));
@@ -18,12 +20,17 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<LandingPage />} />
-          <Route path="cooking" element={<CookingPage />} />
-          <Route path="enhance" element={<EnhancePage />} />
-          <Route path="alchemy" element={<AlchemyPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
+          <Route element={<PublicRoute />}>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+          </Route>
           <Route path="reset-password" element={<ResetPasswordPage />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="cooking" element={<CookingPage />} />
+            <Route path="enhance" element={<EnhancePage />} />
+            <Route path="alchemy" element={<AlchemyPage />} />
+          </Route>
         </Route>
       </Routes>
     </Suspense>

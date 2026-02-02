@@ -19,7 +19,17 @@ const LandingPage = () => {
   return (
     <LandingContainer>
       <Hero />
-      <UpdateNote />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingInline: { xs: "1rem", sm: "4.5rem", md: "12rem", lg: "3rem" },
+        }}
+      >
+        <UpdateNote />
+      </Box>
       <Box
         sx={{
           display: "flex",

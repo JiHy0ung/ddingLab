@@ -54,6 +54,8 @@ const commonInputStyles = {
     height: "2rem",
     fontSize: "0.75rem",
     padding: 0,
+    color: "#000",
+
     "&:-webkit-autofill": {
       WebkitBoxShadow: "0 0 0 1000px white inset",
       WebkitTextFillColor: "#000",

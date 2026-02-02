@@ -319,7 +319,7 @@ const CookingPage = () => {
       <CookingTitle>요리 리딩방</CookingTitle>
       <CookingSubtitle>요리 재료 가격 분석 및 미래 가격 예측</CookingSubtitle>
       <CookingDescription>
-        요리별 재료 조합을 확인하고, 요리 가격 흐름을 예측해보세요.
+        요리별 재료 조합을 확인하고, 요리 가격 흐름을 예측해보세요
       </CookingDescription>
       <CookingDescription
         sx={{ fontSize: "0.75rem", marginBlock: "0.5rem 3rem" }}

@@ -57,7 +57,6 @@ const CookingDescription = styled(Typography)({
   fontFamily: "Galmuri11",
   fontSize: "0.95rem",
   color: "#888",
-  marginBottom: "3rem",
   textAlign: "center",
   maxWidth: "600px",
 });
@@ -320,7 +319,13 @@ const CookingPage = () => {
       <CookingTitle>요리 리딩방</CookingTitle>
       <CookingSubtitle>요리 재료 가격 분석 및 미래 가격 예측</CookingSubtitle>
       <CookingDescription>
-        요리별 재료 조합을 확인하고, 요리 가격 흐름을 예측해보세요
+        요리별 재료 조합을 확인하고, 요리 가격 흐름을 예측해보세요.
+      </CookingDescription>
+      <CookingDescription
+        sx={{ fontSize: "0.75rem", marginBlock: "0.5rem 3rem" }}
+      >
+        ( 요리 가격은 1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30일 오전 3시에
+        변동돼요.)
       </CookingDescription>
       <FoodContainer>
         <FoodRow>

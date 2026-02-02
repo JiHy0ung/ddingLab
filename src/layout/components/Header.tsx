@@ -12,6 +12,8 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { styled } from "@mui/material/styles";
 
+import SteveFace from "../../assets/common/steve_face.png";
+
 const DesktopHeaderMenu = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
@@ -195,7 +197,11 @@ const Header = () => {
               >
                 <Box
                   component="img"
-                  src={`https://cravatar.eu/helmavatar/${userinfo?.minecraft_id}`}
+                  src={
+                    userinfo?.minecraft_id
+                      ? `https://visage.surgeplay.com/face/${userinfo?.minecraft_id}`
+                      : SteveFace
+                  }
                   sx={{
                     width: "2.625rem",
                     height: "2.625rem",
@@ -704,7 +710,11 @@ const Header = () => {
             >
               <Box
                 component="img"
-                src={`https://cravatar.eu/helmavatar/${userinfo?.minecraft_id}`}
+                src={
+                  userinfo?.minecraft_id
+                    ? `https://visage.surgeplay.com/face/${userinfo?.minecraft_id}`
+                    : SteveFace
+                }
                 sx={{
                   width: "100%",
                   height: "100%",
@@ -747,7 +757,11 @@ const Header = () => {
                 >
                   <Box
                     component="img"
-                    src={`https://cravatar.eu/helmavatar/${userinfo?.minecraft_id}`}
+                    src={
+                      userinfo?.minecraft_id
+                        ? `https://visage.surgeplay.com/face/${userinfo?.minecraft_id}`
+                        : SteveFace
+                    }
                     sx={{
                       width: "2.25rem",
                       height: "2.25rem",
@@ -809,7 +823,21 @@ const Header = () => {
             </Menu>
           </>
         ) : (
-          <IconButton onClick={() => navigate("/login")}>
+          <IconButton
+            disableRipple
+            onClick={() => navigate("/login")}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.25rem",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "transparent",
+                transform: "scale(1.05)",
+              },
+            }}
+          >
             <Box
               component="img"
               src="https://unpkg.com/pixelarticons@1.8.0/svg/login.svg"
@@ -817,6 +845,15 @@ const Header = () => {
                 height: "18px",
               }}
             />
+            <Typography
+              sx={{
+                color: "black",
+                fontSize: "0.75rem",
+                fontFamily: "Galmuri11",
+              }}
+            >
+              로그인
+            </Typography>
           </IconButton>
         )}
       </Box>

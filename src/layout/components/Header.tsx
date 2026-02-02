@@ -701,10 +701,6 @@ const Header = () => {
                 width: { md: "2.25rem", sm: "2rem", xs: "2rem" },
                 height: { md: "2.25rem", sm: "2rem", xs: "2rem" },
                 padding: 0,
-                background: "#cacacaff",
-                borderRadius: "50%",
-                overflow: "hidden",
-                border: "1.5px solid black",
               }}
               onClick={(e) => setAnchorEl(e.currentTarget)}
             >
@@ -718,7 +714,7 @@ const Header = () => {
                 sx={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
+                  filter: "drop-shadow(0 0 1px rgba(0, 0, 0, 0.5))",
                 }}
               />
             </IconButton>
@@ -763,6 +759,7 @@ const Header = () => {
                         : SteveFace
                     }
                     sx={{
+                      filter: "drop-shadow(0 0 1px rgba(0, 0, 0, 0.5))",
                       width: "2.25rem",
                       height: "2.25rem",
                     }}

@@ -255,6 +255,16 @@ const UpdateNote = () => {
                 marginBottom: "0.8rem",
               }}
             >
+              • 비밀번호 재설정 기능 추가
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: "Galmuri11",
+                fontSize: "0.95rem",
+                marginBottom: "0.8rem",
+              }}
+            >
               • 요리 가격 차트 개선
             </Typography>
 

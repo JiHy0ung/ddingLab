@@ -17,6 +17,7 @@ interface AuthContextType {
   ) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -83,7 +84,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     minecraft_id: string,
     zodiac: string,
   ) => {
-    const { error } = await supabase.auth.signUp({
+    // 마인크래프트 아이디 중복 체크
+    const { data: existingUser, error: checkError } = await supabase
+      .from("userinfo")
+      .select("id")
+      .eq("minecraft_id", minecraft_id)
+      .maybeSingle();
+
+    if (checkError) {
+      throw checkError;
+    }
+
+    if (existingUser) {
+      throw new Error("이미 사용 중인 마인크래프트 아이디입니다.");
+    }
+
+    const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -95,7 +111,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
     });
 
-    if (error) throw error;
+    if (signUpError) throw signUpError;
+
+    await supabase.auth.signOut();
   };
 
   // 로그인 함수
@@ -114,6 +132,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) throw error;
   };
 
+  // 비밀번호 재설정 함수
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (error) throw error;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -124,6 +151,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signUp,
         signIn,
         signOut,
+        resetPassword,
       }}
     >
       {children}

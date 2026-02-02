@@ -13,6 +13,8 @@ import { useState } from "react";
 import { zodiacSigns } from "../../constants/zodiacMap";
 
 import SteveFace from "../../assets/common/steve_face.png";
+import CommonSnackbar from "../../common/components/CommonSnackBar";
+import { useNavigate } from "react-router";
 
 const RegisterContainer = styled(Box)({
   width: "100%",
@@ -166,6 +168,8 @@ const RegisterButton = styled(Button)({
 const RegisterPage = () => {
   const { signUp } = useAuth();
 
+  const navigate = useNavigate();
+
   const [minecraftId, setMinecraftId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -174,169 +178,197 @@ const RegisterPage = () => {
   const [zodiac, setZodiac] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+
+  const openSnackbar = (
+    message: string,
+    severity: "success" | "error" | "warning" | "info" = "info",
+  ) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
   const handleRegister = async () => {
     if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다");
+      openSnackbar("비밀번호가 일치하지 않습니다", "warning");
       return;
     }
 
     try {
       await signUp(email, password, name, minecraftId, zodiac);
-      alert("회원가입 완료! 이메일 인증 후 로그인해주세요.");
+      openSnackbar("회원가입 완료!", "success");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (e: any) {
-      alert(e.message);
+      openSnackbar(e.message, "error");
     }
   };
 
   return (
-    <RegisterContainer>
-      <RegisterBox>
-        <RegisterTitle>회원가입</RegisterTitle>
-        <MinecraftIdInputBox
-          placeholder="마인크래프트 아이디"
-          value={minecraftId}
-          onChange={(e) => setMinecraftId(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
+    <>
+      <RegisterContainer>
+        <RegisterBox>
+          <RegisterTitle>회원가입</RegisterTitle>
+          <MinecraftIdInputBox
+            placeholder="마인크래프트 아이디"
+            value={minecraftId}
+            onChange={(e) => setMinecraftId(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Box
+                    component="img"
+                    src={
+                      minecraftId
+                        ? `https://visage.surgeplay.com/face/${minecraftId}`
+                        : SteveFace
+                    }
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                      e.currentTarget.src = SteveFace;
+                    }}
+                    alt="Minecraft Avatar"
+                    sx={{
+                      filter: "drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))",
+                      width: "1.625rem",
+                      height: "1.625rem",
+                    }}
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <UserNameInputBox
+            placeholder="닉네임"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <EmailInputBox
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <PassWordInputBox
+            type={showPassword ? "text" : "password"}
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{ marginRight: "0" }}
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    <Box
+                      component="img"
+                      src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+                        showPassword ? "eye" : "eye-closed"
+                      }.svg`}
+                      sx={{ height: "1rem" }}
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <PassWordConfirmInputBox
+            type={showPassword ? "text" : "password"}
+            placeholder="비밀번호 확인"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{ marginRight: "0" }}
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    <Box
+                      component="img"
+                      src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+                        showPassword ? "eye" : "eye-closed"
+                      }.svg`}
+                      sx={{ height: "1rem" }}
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <ZodiacSelect
+            select
+            value={zodiac}
+            onChange={(e) => setZodiac(e.target.value)}
+            SelectProps={{
+              displayEmpty: true,
+              renderValue: (selected) => {
+                if (!selected) {
+                  return <span style={{ color: "#999" }}>별자리</span>;
+                }
+                return zodiacSigns.find((sign) => sign.name === selected)
+                  ?.label;
+              },
+              IconComponent: () => (
                 <Box
                   component="img"
-                  src={
-                    minecraftId
-                      ? `https://visage.surgeplay.com/face/${minecraftId}`
-                      : SteveFace
-                  }
-                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                    e.currentTarget.src = SteveFace;
-                  }}
-                  alt="Minecraft Avatar"
+                  src="https://unpkg.com/pixelarticons@1.8.0/svg/chevron-down.svg"
                   sx={{
-                    filter: "drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))",
-                    width: "1.625rem",
-                    height: "1.625rem",
+                    height: "1rem",
+                    width: "1rem",
+                    marginRight: "0.5rem",
+                    pointerEvents: "none",
                   }}
                 />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <UserNameInputBox
-          placeholder="닉네임"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <EmailInputBox
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <PassWordInputBox
-          type={showPassword ? "text" : "password"}
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  sx={{ marginRight: "0" }}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  edge="end"
-                >
-                  <Box
-                    component="img"
-                    src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
-                      showPassword ? "eye" : "eye-closed"
-                    }.svg`}
-                    sx={{ height: "1rem" }}
-                  />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <PassWordConfirmInputBox
-          type={showPassword ? "text" : "password"}
-          placeholder="비밀번호 확인"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  sx={{ marginRight: "0" }}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  edge="end"
-                >
-                  <Box
-                    component="img"
-                    src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
-                      showPassword ? "eye" : "eye-closed"
-                    }.svg`}
-                    sx={{ height: "1rem" }}
-                  />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <ZodiacSelect
-          select
-          value={zodiac}
-          onChange={(e) => setZodiac(e.target.value)}
-          SelectProps={{
-            displayEmpty: true,
-            renderValue: (selected) => {
-              if (!selected) {
-                return <span style={{ color: "#999" }}>별자리</span>;
-              }
-              return zodiacSigns.find((sign) => sign.name === selected)?.label;
-            },
-            IconComponent: () => (
-              <Box
-                component="img"
-                src="https://unpkg.com/pixelarticons@1.8.0/svg/chevron-down.svg"
-                sx={{
-                  height: "1rem",
-                  width: "1rem",
-                  marginRight: "0.5rem",
-                  pointerEvents: "none",
-                }}
-              />
-            ),
-            MenuProps: {
-              PaperProps: {
-                sx: {
-                  borderRadius: 0,
-                  border: "2px solid black",
-                  marginTop: "0.25rem",
-                  "& .MuiMenuItem-root": {
-                    fontFamily: "Galmuri11",
-                    fontSize: "0.8rem",
-                    "&:hover": {
-                      backgroundColor: "#cca3ffff",
-                    },
-                    "&.Mui-selected": {
-                      backgroundColor: "#cca3ffff",
+              ),
+              MenuProps: {
+                PaperProps: {
+                  sx: {
+                    borderRadius: 0,
+                    border: "2px solid black",
+                    marginTop: "0.25rem",
+                    "& .MuiMenuItem-root": {
+                      fontFamily: "Galmuri11",
+                      fontSize: "0.8rem",
                       "&:hover": {
                         backgroundColor: "#cca3ffff",
+                      },
+                      "&.Mui-selected": {
+                        backgroundColor: "#cca3ffff",
+                        "&:hover": {
+                          backgroundColor: "#cca3ffff",
+                        },
                       },
                     },
                   },
                 },
               },
-            },
-          }}
-        >
-          {zodiacSigns.map((sign) => (
-            <MenuItem key={sign.name} value={sign.name}>
-              {sign.label}
-            </MenuItem>
-          ))}
-        </ZodiacSelect>
-        <RegisterButton onClick={handleRegister}>회원가입</RegisterButton>
-      </RegisterBox>
-    </RegisterContainer>
+            }}
+          >
+            {zodiacSigns.map((sign) => (
+              <MenuItem key={sign.name} value={sign.name}>
+                {sign.label}
+              </MenuItem>
+            ))}
+          </ZodiacSelect>
+          <RegisterButton onClick={handleRegister}>회원가입</RegisterButton>
+        </RegisterBox>
+      </RegisterContainer>
+      <CommonSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        onClose={() => setSnackbarOpen(false)}
+      />
+    </>
   );
 };
 

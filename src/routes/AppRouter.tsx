@@ -8,6 +8,9 @@ const EnhancePage = React.lazy(() => import("../pages/Enhance/EnhancePage"));
 const AlchemyPage = React.lazy(() => import("../pages/Alchemy/AlchemyPage"));
 const LoginPage = React.lazy(() => import("../pages/Login/LoginPage"));
 const RegisterPage = React.lazy(() => import("../pages/Register/RegisterPage"));
+const ResetPasswordPage = React.lazy(
+  () => import("../pages/ResetPassword/ResetPasswordPage"),
+);
 
 const AppRouter = () => {
   return (
@@ -20,6 +23,7 @@ const AppRouter = () => {
           <Route path="alchemy" element={<AlchemyPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
         </Route>
       </Routes>
     </Suspense>

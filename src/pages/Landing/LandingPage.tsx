@@ -11,7 +11,7 @@ const LandingContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "3rem",
+  gap: "1rem",
   paddingBottom: "5rem",
 }));
 

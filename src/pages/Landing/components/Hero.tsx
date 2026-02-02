@@ -8,6 +8,7 @@ const HeroContainer = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   overflow: "hidden",
+  marginBottom: "2rem",
 });
 
 const HeroImage = styled(Box)<BoxProps<"img">>({

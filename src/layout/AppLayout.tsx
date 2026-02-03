@@ -27,7 +27,7 @@ const AppLayout = () => {
 
   const [volume, setVolume] = useState(() => {
     const savedVolume = localStorage.getItem("musicVolume");
-    return savedVolume ? parseInt(savedVolume) : 2;
+    return savedVolume ? parseInt(savedVolume) : 12;
   });
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -64,6 +64,12 @@ const AppLayout = () => {
       return () => clearTimeout(timer);
     }
   }, []);
+
+  useEffect(() => {
+    if (musicRef.current) {
+      musicRef.current.setVolume(volume);
+    }
+  }, [currentTrackIndex, volume]);
 
   // 음악이 처음 켜질 때 초기화
   useEffect(() => {
@@ -145,6 +151,7 @@ const AppLayout = () => {
           videoId={PLAYLIST[currentTrackIndex].id}
           isPlaying={isMusicPlaying}
           onEnded={handleNextTrack}
+          volume={volume}
           key={PLAYLIST[currentTrackIndex].id}
         />
       )}

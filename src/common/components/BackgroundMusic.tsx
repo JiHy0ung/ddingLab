@@ -11,6 +11,7 @@ import YouTube, { YouTubeProps } from "react-youtube";
 interface BackgroundMusicProps {
   videoId: string;
   isPlaying: boolean;
+  volume: number;
   onEnded: () => void;
 }
 
@@ -22,7 +23,7 @@ export interface BackgroundMusicRef {
 }
 
 const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
-  ({ videoId, isPlaying, onEnded }, ref) => {
+  ({ videoId, isPlaying, onEnded, volume }, ref) => {
     const playerRef = useRef<any>(null);
     const [canAutoplay, setCanAutoplay] = useState(false);
 
@@ -53,10 +54,10 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
 
     const onReady: YouTubeProps["onReady"] = (event) => {
       playerRef.current = event.target;
+      event.target.setVolume(volume);
 
       // 사용자 상호작용이 있었다면 바로 재생
       if (canAutoplay && isPlaying) {
-        event.target.setVolume(2);
         event.target.playVideo();
       }
     };
@@ -68,7 +69,6 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
 
         // 이미 플레이어가 준비되어 있다면 바로 재생
         if (playerRef.current && isPlaying) {
-          playerRef.current.setVolume(2);
           playerRef.current.playVideo();
         }
 
@@ -107,6 +107,12 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
         }
       }
     }, [isPlaying, canAutoplay]);
+
+    useEffect(() => {
+      if (playerRef.current) {
+        playerRef.current.setVolume(volume);
+      }
+    }, [volume, videoId]);
 
     const opts: YouTubeProps["opts"] = {
       height: "0",

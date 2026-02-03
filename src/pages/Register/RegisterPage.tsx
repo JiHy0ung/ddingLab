@@ -60,36 +60,21 @@ const commonInputStyles = {
       WebkitBoxShadow: "0 0 0 1000px white inset",
       WebkitTextFillColor: "#000",
     },
-    "&:-webkit-autofill:hover": {
-      WebkitBoxShadow: "0 0 0 1000px white inset",
-    },
-    "&:-webkit-autofill:focus": {
-      WebkitBoxShadow: "0 0 0 1000px white inset",
-    },
-    "&:-webkit-autofill:active": {
-      WebkitBoxShadow: "0 0 0 1000px white inset",
-    },
   },
   "& .MuiInputBase-root": {
     padding: "0.5rem 0.5rem 0.5rem 1rem",
     fontFamily: "Galmuri11",
     borderRadius: 0,
-    backgroundColor: "#ffffffff",
+    backgroundColor: "#fff",
     boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
-    "&.Mui-focused": {
-      backgroundColor: "#ffffffff",
-    },
   },
-
   "& .MuiOutlinedInput-notchedOutline": {
     border: "2px solid black",
   },
-
   "&:hover .MuiOutlinedInput-notchedOutline": {
     borderColor: "#000",
   },
-
-  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#000",
     borderWidth: "2px",
   },

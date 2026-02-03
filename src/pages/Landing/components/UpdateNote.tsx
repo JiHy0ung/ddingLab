@@ -78,6 +78,13 @@ const ModalContent = styled(Box)(({ theme }) => ({
   padding: "1rem 1.625rem",
   fontFamily: "Galmuri11",
 
+  "&:focus": {
+    outline: "none",
+  },
+  "&:focus-visible": {
+    outline: "none",
+  },
+
   [theme.breakpoints.down("sm")]: {
     width: "85%",
     padding: "1.5rem",

@@ -42,10 +42,12 @@ const CommonSnackbar = ({
       onClose={onClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       sx={{
+        backgroundColor: "#ffffffff",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         mt: 7,
+        zIndex: 99999,
       }}
     >
       <Alert

@@ -610,7 +610,7 @@ const Header = () => {
                 letterSpacing: -1,
               }}
             >
-              해양 연금실
+              해양 연구소
             </Typography>
           </Button>
         </DesktopHeaderMenu>

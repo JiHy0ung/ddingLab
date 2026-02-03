@@ -11,6 +11,7 @@ import YouTube, { YouTubeProps } from "react-youtube";
 interface BackgroundMusicProps {
   videoId: string;
   isPlaying: boolean;
+  onEnded: () => void;
 }
 
 export interface BackgroundMusicRef {
@@ -21,7 +22,7 @@ export interface BackgroundMusicRef {
 }
 
 const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
-  ({ videoId, isPlaying }, ref) => {
+  ({ videoId, isPlaying, onEnded }, ref) => {
     const playerRef = useRef<any>(null);
     const [canAutoplay, setCanAutoplay] = useState(false);
 
@@ -93,7 +94,7 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
     const onStateChange: YouTubeProps["onStateChange"] = (event) => {
       // 영상 종료 시 다시 재생 (루프)
       if (event.data === 0) {
-        event.target.playVideo();
+        onEnded();
       }
     };
 
@@ -111,9 +112,9 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
       height: "0",
       width: "0",
       playerVars: {
-        autoplay: 0,
+        autoplay: 1,
         controls: 0,
-        loop: 1,
+        loop: 0,
         playlist: videoId,
         playsinline: 1,
         enablejsapi: 1,

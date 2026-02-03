@@ -8,16 +8,23 @@ import BackgroundMusic, {
 import { useState, useRef, useEffect } from "react";
 import MusicControlPanel from "../common/components/MucsicContorlPanel";
 import CommonSnackbar from "../common/components/CommonSnackBar";
+import { PLAYLIST } from "../constants/playlistData";
 
 const AppLayout = () => {
-  // localStorage에서 음악 설정 불러오기 (기본값 true)
   const [isMusicPlaying, setIsMusicPlaying] = useState(() => {
     const saved = localStorage.getItem("isMusicPlaying");
-    return saved !== null ? saved === "true" : true; // 기본값 true
+    return saved !== null ? saved === "true" : true;
   });
 
   const [isMusicInitialized, setIsMusicInitialized] = useState(false);
   const [showMusicControl, setShowMusicControl] = useState(false);
+
+  // 현재 곡 인덱스
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => {
+    const saved = localStorage.getItem("currentTrackIndex");
+    return saved ? parseInt(saved) : 0;
+  });
+
   const [volume, setVolume] = useState(() => {
     const savedVolume = localStorage.getItem("musicVolume");
     return savedVolume ? parseInt(savedVolume) : 20;
@@ -26,14 +33,12 @@ const AppLayout = () => {
   const [duration, setDuration] = useState(0);
 
   const musicRef = useRef<BackgroundMusicRef>(null);
-  const YOUTUBE_VIDEO_ID = "ZO0brUR1L4Q";
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<
     "success" | "error" | "warning" | "info"
   >("info");
-
   const openSnackbar = (
     message: string,
     severity: "success" | "error" | "warning" | "info" = "info",
@@ -77,6 +82,11 @@ const AppLayout = () => {
     localStorage.setItem("musicVolume", String(volume));
   }, [volume]);
 
+  // 현재 곡 인덱스 저장
+  useEffect(() => {
+    localStorage.setItem("currentTrackIndex", String(currentTrackIndex));
+  }, [currentTrackIndex]);
+
   // 현재 재생 시간 업데이트
   useEffect(() => {
     const interval = setInterval(() => {
@@ -108,6 +118,20 @@ const AppLayout = () => {
     musicRef.current?.seekTo(time);
   };
 
+  // 다음 곡
+  const handleNextTrack = () => {
+    setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+    setCurrentTime(0);
+  };
+
+  // 이전 곡
+  const handlePrevTrack = () => {
+    setCurrentTrackIndex((prev) =>
+      prev === 0 ? PLAYLIST.length - 1 : prev - 1,
+    );
+    setCurrentTime(0);
+  };
+
   return (
     <Box>
       <Header />
@@ -115,12 +139,13 @@ const AppLayout = () => {
         <Outlet />
       </Box>
 
-      {/* 기본적으로 음악 컴포넌트 렌더링 */}
       {(isMusicPlaying || isMusicInitialized) && (
         <BackgroundMusic
           ref={musicRef}
-          videoId={YOUTUBE_VIDEO_ID}
+          videoId={PLAYLIST[currentTrackIndex].id}
           isPlaying={isMusicPlaying}
+          onEnded={handleNextTrack}
+          key={PLAYLIST[currentTrackIndex].id}
         />
       )}
 
@@ -130,9 +155,14 @@ const AppLayout = () => {
         volume={volume}
         currentTime={currentTime}
         duration={duration}
+        currentTrack={PLAYLIST[currentTrackIndex]}
+        totalTracks={PLAYLIST.length}
+        currentTrackIndex={currentTrackIndex}
         onPlayPause={handleMusicToggle}
         onVolumeChange={handleVolumeChange}
         onSeek={handleSeek}
+        onNextTrack={handleNextTrack}
+        onPrevTrack={handlePrevTrack}
       />
 
       <CommonFloatingButton

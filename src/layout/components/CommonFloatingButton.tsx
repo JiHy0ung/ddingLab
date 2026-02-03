@@ -85,7 +85,7 @@ const CommonFloatingButton = ({
         <Box
           component="img"
           src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
-            isMusicPlaying ? "volume" : "volume-mute"
+            isMusicPlaying ? "music" : "volume-x"
           }.svg`}
           sx={{
             filter: "brightness(0) invert(1)",

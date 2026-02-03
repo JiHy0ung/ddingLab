@@ -56,7 +56,7 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
 
       // 사용자 상호작용이 있었다면 바로 재생
       if (canAutoplay && isPlaying) {
-        event.target.setVolume(20);
+        event.target.setVolume(2);
         event.target.playVideo();
       }
     };
@@ -68,7 +68,7 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef, BackgroundMusicProps>(
 
         // 이미 플레이어가 준비되어 있다면 바로 재생
         if (playerRef.current && isPlaying) {
-          playerRef.current.setVolume(20);
+          playerRef.current.setVolume(2);
           playerRef.current.playVideo();
         }
 

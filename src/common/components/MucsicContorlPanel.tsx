@@ -82,7 +82,7 @@ const MusicControlPanel = ({
   onNextTrack,
   onPrevTrack,
 }: MusicControlPanelProps) => {
-  const [previousVolume, setPreviousVolume] = useState(20);
+  const [previousVolume, setPreviousVolume] = useState(2);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);

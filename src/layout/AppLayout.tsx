@@ -27,7 +27,7 @@ const AppLayout = () => {
 
   const [volume, setVolume] = useState(() => {
     const savedVolume = localStorage.getItem("musicVolume");
-    return savedVolume ? parseInt(savedVolume) : 20;
+    return savedVolume ? parseInt(savedVolume) : 2;
   });
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);

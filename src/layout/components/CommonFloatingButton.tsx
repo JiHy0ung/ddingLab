@@ -1,4 +1,3 @@
-// components/CommonFloatingButton.tsx
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Fab } from "@mui/material";
@@ -45,6 +44,7 @@ const SubButton = styled(Fab)({
 
 interface CommonFloatingButtonProps {
   isMusicPlaying: boolean;
+  showMusicControl: boolean;
   onMusicToggle: () => void;
   onMusicControlOpen: () => void;
 }
@@ -53,6 +53,7 @@ const CommonFloatingButton = ({
   isMusicPlaying,
   onMusicToggle,
   onMusicControlOpen,
+  showMusicControl,
 }: CommonFloatingButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -67,7 +68,9 @@ const CommonFloatingButton = ({
 
   const handleMusicControlOpen = () => {
     onMusicControlOpen();
-    setIsOpen(false);
+    if (showMusicControl) {
+      setIsOpen(false);
+    }
   };
 
   return (

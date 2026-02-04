@@ -16,7 +16,6 @@ const ControlPanel = styled(Box)({
   transition: "all 0.3s ease",
 });
 
-// 전광판 애니메이션
 const marquee = keyframes`
   0% {
     transform: translateX(0%);

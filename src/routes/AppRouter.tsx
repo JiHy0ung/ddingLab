@@ -14,6 +14,12 @@ const ResetPasswordPage = React.lazy(
   () => import("../pages/ResetPassword/ResetPasswordPage"),
 );
 
+// TODO:
+// 효율 계산기
+// 게시판 업데이트
+// 해양 연구소 업데이트
+// 한 줄 꿀팁
+
 const AppRouter = () => {
   return (
     <Suspense fallback={<div>...loading</div>}>

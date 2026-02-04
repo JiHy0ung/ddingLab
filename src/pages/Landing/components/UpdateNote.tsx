@@ -198,7 +198,7 @@ const UpdateNote = () => {
         }}
       >
         <UpdateText onClick={handleOpen}>
-          로그인/회원가입 기능 구현, 해양 연금술 페이지 추가 예정
+          BGM 추가 - 오션의 노래 추천!
         </UpdateText>
       </Tooltip>
 
@@ -230,7 +230,7 @@ const UpdateNote = () => {
                   marginBottom: "0.4rem",
                 }}
               >
-                (ver 0.1.0-Beta)
+                (ver 0.2.0-Beta)
               </Typography>
             </ModalTitleBox>
             <CloseButton onClick={handleClose}>
@@ -252,7 +252,10 @@ const UpdateNote = () => {
                 marginBottom: "0.8rem",
               }}
             >
-              • 로그인/회원가입 기능 구현
+              • 플로팅 버튼 추가{" "}
+              <span style={{ fontSize: "0.75rem", color: "#666" }}>
+                (Scroll To Top, BGM 컨트롤 패널)
+              </span>
             </Typography>
 
             <Typography
@@ -262,27 +265,10 @@ const UpdateNote = () => {
                 marginBottom: "0.8rem",
               }}
             >
-              • 비밀번호 재설정 기능 추가
-            </Typography>
-
-            <Typography
-              sx={{
-                fontFamily: "Galmuri11",
-                fontSize: "0.95rem",
-                marginBottom: "0.8rem",
-              }}
-            >
-              • 요리 가격 차트 개선
-            </Typography>
-
-            <Typography
-              sx={{
-                fontFamily: "Galmuri11",
-                fontSize: "0.95rem",
-                marginBottom: "0.8rem",
-              }}
-            >
-              • 해양 연금술 페이지 추가 예정
+              • 배경음악 추가(오션의 노래 추천){" "}
+              <span style={{ fontSize: "0.75rem", color: "#666" }}>
+                - 추후 DB 연결 예정
+              </span>
             </Typography>
 
             <Typography

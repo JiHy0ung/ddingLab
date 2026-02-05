@@ -16,6 +16,7 @@ const ResetPasswordPage = React.lazy(
 
 // TODO:
 // 효율 계산기
+// 지도 업데이트(효율 동선)
 // 게시판
 // 해양 연구소 업데이트
 // 한 줄 꿀팁

@@ -24,6 +24,7 @@ import { useFoodStore } from "../../stores/foodStore";
 import { RECIPES } from "../../constants/foodRecipeData";
 import { FoodFixedRange, FoodPriceData } from "../../constants/foodPriceData";
 import FoodPriceChart from "./components/FoodPriceChart";
+import RecipeEfficiencyCalculator from "./components/RecipeEfficiencyCalculator";
 
 interface FoodItemProps {
   title: string;
@@ -467,6 +468,7 @@ const CookingPage = () => {
         </RecipeHeader>
         <FoodPriceChart />
       </FoodInfoContainer>
+      <RecipeEfficiencyCalculator />
     </CookingContainer>
   );
 };

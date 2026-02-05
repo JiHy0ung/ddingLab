@@ -266,23 +266,7 @@ const Header = () => {
           </MobileLoginButton>
         )}
       </MobileAuthBox>
-      <MobileMenuButton onClick={() => navigate("/")} disableRipple>
-        <Box
-          component="img"
-          src="https://unpkg.com/pixelarticons@1.8.0/svg/home.svg"
-          sx={{
-            height: "18px",
-          }}
-        />
-        <Typography
-          sx={{
-            fontFamily: "Galmuri11",
-            fontSize: "0.8125rem",
-          }}
-        >
-          홈
-        </Typography>
-      </MobileMenuButton>
+
       <MobileMenuButton onClick={() => navigate("/cooking")} disableRipple>
         <Box
           component="img"
@@ -402,64 +386,6 @@ const Header = () => {
           제빵 연구소
         </Typography>
         <DesktopHeaderMenu>
-          <Button
-            onClick={() => navigate("/")}
-            disableRipple
-            sx={{
-              minWidth: "1rem",
-              position: "relative",
-              overflow: "hidden",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: { md: "0.4rem", sm: "0.3rem", xs: "0.2rem" },
-              color: "grey",
-              cursor: "pointer !important",
-              px: 0,
-              py: 1,
-              borderRadius: 0,
-              transition: "all 0.3s ease",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(transparent 90%, black 90%)",
-                opacity: 0,
-                zIndex: -1,
-                transition: "all 0.3s ease",
-              },
-              "&:hover::before": {
-                opacity: 1,
-              },
-              "&:hover": {
-                transform: "scale(1.02)",
-                backgroundColor: "transparent",
-                color: "#14161f",
-                "& img": {
-                  transition: "all 0.3s ease",
-                  filter: "invert(0%)",
-                },
-              },
-            }}
-          >
-            <Box
-              component="img"
-              src="https://unpkg.com/pixelarticons@1.8.0/svg/home.svg"
-              sx={{
-                height: "18px",
-                filter:
-                  "invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)",
-              }}
-            />
-            <Typography
-              sx={{
-                fontFamily: "Galmuri11",
-                fontSize: "0.8125rem",
-              }}
-            >
-              홈
-            </Typography>
-          </Button>
           <Button
             onClick={() => navigate("/cooking")}
             disableRipple

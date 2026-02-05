@@ -198,7 +198,7 @@ const UpdateNote = () => {
         }}
       >
         <UpdateText onClick={handleOpen}>
-          BGM 추가 - 오션의 노래 추천!
+          요리 효율 계산기 추가, BGM 추가 - 오션의 노래 추천!
         </UpdateText>
       </Tooltip>
 
@@ -268,6 +268,19 @@ const UpdateNote = () => {
               • 배경음악 추가(오션의 노래 추천){" "}
               <span style={{ fontSize: "0.75rem", color: "#666" }}>
                 - 추후 DB 연결 예정
+              </span>
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: "Galmuri11",
+                fontSize: "0.95rem",
+                marginBottom: "0.8rem",
+              }}
+            >
+              • 요리 효율 계산기 추가{" "}
+              <span style={{ fontSize: "0.75rem", color: "#666" }}>
+                (수식 오류 있을 시 알려주세용)
               </span>
             </Typography>
 

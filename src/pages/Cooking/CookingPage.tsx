@@ -274,7 +274,7 @@ const FoodPrice = styled(Typography)({
   color: "#4c4c4cff",
 });
 
-const PriceChange = styled(Typography)({
+const PriceChange = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "0.4rem",

@@ -30,6 +30,7 @@ import {
 import { RotateCw } from "lucide-react";
 import { skillBonuses } from "../../../constants/skillBonuses";
 import { calculateSkillPrice } from "../../../utils/skillPrice";
+import { useSkillStore } from "../../../stores/skillStore";
 
 const CalculatorContainer = styled(Box)({
   display: "flex",
@@ -266,7 +267,13 @@ const foodImages: Record<string, string> = {
 type SortType = "default" | "profitRate" | "profit";
 
 const RecipeEfficiencyCalculator = () => {
-  const SKILL_STORAGE_KEY = "cooking_skill_levels";
+  const {
+    moneyMakingLv,
+    fullPotLv,
+    setMoneyMakingLv,
+    setFullPotLv,
+    resetSkills,
+  } = useSkillStore();
 
   // localStorage에서 가격 불러오기
   const [prices, setPrices] = useState<Record<string, number>>(() => {
@@ -276,32 +283,10 @@ const RecipeEfficiencyCalculator = () => {
 
   const [sortType, setSortType] = useState<SortType>("default");
 
-  // 스킬 레벨 상태
-  const [moneyMakingLv, setMoneyMakingLv] = useState(() => {
-    const saved = localStorage.getItem(SKILL_STORAGE_KEY);
-    return saved ? (JSON.parse(saved).moneyMakingLv ?? 0) : 0;
-  });
-
-  const [fullPotLv, setFullPotLv] = useState(() => {
-    const saved = localStorage.getItem(SKILL_STORAGE_KEY);
-    return saved ? (JSON.parse(saved).fullPotLv ?? 0) : 0;
-  });
-
   // 가격 변경 시 localStorage에 저장
   useEffect(() => {
     localStorage.setItem("foodPrices", JSON.stringify(prices));
   }, [prices]);
-
-  // 스킬 레벨 변경 시 localStorage에 저장
-  useEffect(() => {
-    localStorage.setItem(
-      SKILL_STORAGE_KEY,
-      JSON.stringify({
-        moneyMakingLv,
-        fullPotLv,
-      }),
-    );
-  }, [moneyMakingLv, fullPotLv]);
 
   const handlePriceChange = (foodName: string, value: string) => {
     const numValue = parseInt(value) || 0;
@@ -453,10 +438,7 @@ const RecipeEfficiencyCalculator = () => {
             </SkillDropDown>
 
             <IconButton
-              onClick={() => {
-                setMoneyMakingLv(0);
-                setFullPotLv(0);
-              }}
+              onClick={resetSkills}
               sx={{
                 width: "3rem",
                 height: "3rem",

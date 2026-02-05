@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Box, BoxProps, Tooltip, Typography } from "@mui/material";
 import { useFoodStore } from "../../../stores/foodStore";
 import { RECIPES } from "../../../constants/foodRecipeData";
+import React from "react";
 
 interface RecipeItemProps {
   title: React.ReactNode;
@@ -155,18 +156,16 @@ const FoodRecipe = () => {
       <RecipeBox>
         <RecipeItemBox>
           {recipe.ingredients.map((ingredient, index) => (
-            <>
-              <RecipeItem
-                key={index}
-                title={`${ingredient.name} ${ingredient.amount}개`}
-              >
+            <React.Fragment key={ingredient.name}>
+              <RecipeItem title={`${ingredient.name} ${ingredient.amount}개`}>
                 <RecipeImg component="img" src={ingredient.image} />
                 <RecipeCount>{ingredient.amount}</RecipeCount>
               </RecipeItem>
+
               {index < recipe.ingredients.length - 1 && (
                 <RecipeOperator>+</RecipeOperator>
               )}
-            </>
+            </React.Fragment>
           ))}
         </RecipeItemBox>
       </RecipeBox>

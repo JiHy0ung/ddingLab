@@ -30,6 +30,7 @@ import {
 import { RotateCw } from "lucide-react";
 import { skillBonuses } from "../../../constants/skillBonuses";
 import { calculateSkillPrice } from "../../../utils/skillPrice";
+import { useSkillStore } from "../../../stores/skillStore";
 
 // 주간/월간 데이터 필터링
 const filterDataByPeriod = (data, period, selectedYear?, selectedMonth?) => {
@@ -264,19 +265,16 @@ const ChartContainer = styled("div")<{ isScrollable: boolean }>(
 );
 
 const CookingPriceChart = () => {
-  const SKILL_STORAGE_KEY = "cooking_skill_levels";
-
   const selectedFood = useFoodStore((state) => state.selectedFood);
-  const [period, setPeriod] = useState("month");
-  const [moneyMakingLv, setMoneyMakingLv] = useState(() => {
-    const saved = localStorage.getItem(SKILL_STORAGE_KEY);
-    return saved ? (JSON.parse(saved).moneyMakingLv ?? 0) : 0;
-  });
+  const {
+    moneyMakingLv,
+    fullPotLv,
+    setMoneyMakingLv,
+    setFullPotLv,
+    resetSkills,
+  } = useSkillStore();
 
-  const [fullPotLv, setFullPotLv] = useState(() => {
-    const saved = localStorage.getItem(SKILL_STORAGE_KEY);
-    return saved ? (JSON.parse(saved).fullPotLv ?? 0) : 0;
-  });
+  const [period, setPeriod] = useState("month");
 
   const allData = FoodPriceData[selectedFood as keyof typeof FoodPriceData];
 
@@ -329,16 +327,6 @@ const CookingPriceChart = () => {
       : [0, 100];
 
   const lineColor = data.length > 1 ? isUp(data) : "#3c3c3cff";
-
-  useEffect(() => {
-    localStorage.setItem(
-      SKILL_STORAGE_KEY,
-      JSON.stringify({
-        moneyMakingLv,
-        fullPotLv,
-      }),
-    );
-  }, [moneyMakingLv, fullPotLv]);
 
   // 년도 변경 시 해당 년도의 첫 번째 월로 자동 설정
   useEffect(() => {
@@ -454,10 +442,7 @@ const CookingPriceChart = () => {
               </SkillDropDown>
             </SkillsBox>
             <IconButton
-              onClick={() => {
-                setMoneyMakingLv(0);
-                setFullPotLv(0);
-              }}
+              onClick={resetSkills}
               sx={{
                 width: "3rem",
                 height: "3rem",

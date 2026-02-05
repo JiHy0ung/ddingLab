@@ -45,6 +45,7 @@ const SubButton = styled(Fab)({
 interface CommonFloatingButtonProps {
   isMusicPlaying: boolean;
   showMusicControl: boolean;
+  setShowMusicControl: React.Dispatch<React.SetStateAction<boolean>>;
   onMusicToggle: () => void;
   onMusicControlOpen: () => void;
 }
@@ -54,16 +55,23 @@ const CommonFloatingButton = ({
   onMusicToggle,
   onMusicControlOpen,
   showMusicControl,
+  setShowMusicControl,
 }: CommonFloatingButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
+    if (showMusicControl) {
+      setShowMusicControl(false);
+    }
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setIsOpen(false);
+    if (showMusicControl) {
+      setShowMusicControl(false);
+    }
   };
 
   const handleMusicControlOpen = () => {

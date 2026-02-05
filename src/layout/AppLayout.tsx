@@ -177,6 +177,7 @@ const AppLayout = () => {
         onMusicToggle={handleMusicToggle}
         onMusicControlOpen={handleMusicControlOpen}
         showMusicControl={showMusicControl}
+        setShowMusicControl={setShowMusicControl}
       />
 
       <CommonSnackbar

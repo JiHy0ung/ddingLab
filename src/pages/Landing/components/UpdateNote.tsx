@@ -230,7 +230,7 @@ const UpdateNote = () => {
                   marginBottom: "0.4rem",
                 }}
               >
-                (ver 0.2.0-Beta)
+                (ver 0.3.0-Beta)
               </Typography>
             </ModalTitleBox>
             <CloseButton onClick={handleClose}>

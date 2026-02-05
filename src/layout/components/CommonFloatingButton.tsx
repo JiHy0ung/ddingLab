@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Fab } from "@mui/material";
 
@@ -58,6 +58,24 @@ const CommonFloatingButton = ({
   setShowMusicControl,
 }: CommonFloatingButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTopZone, setIsTopZone] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      const ratio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+      setIsTopZone(ratio <= 0.3);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -66,8 +84,21 @@ const CommonFloatingButton = ({
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleScrollAction = () => {
+    if (isTopZone) {
+      // 상단 30% → 아래로
+      window.scrollTo({
+        top: 1350,
+        behavior: "smooth",
+      });
+    } else {
+      // 그 외 → 위로
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
     setIsOpen(false);
     if (showMusicControl) {
       setShowMusicControl(false);
@@ -108,7 +139,7 @@ const CommonFloatingButton = ({
       <SubButton
         size="medium"
         disableRipple
-        onClick={scrollToTop}
+        onClick={handleScrollAction}
         sx={{
           bottom: isOpen ? 90 : 30,
           opacity: isOpen ? 1 : 0,
@@ -117,7 +148,9 @@ const CommonFloatingButton = ({
       >
         <Box
           component="img"
-          src="https://unpkg.com/pixelarticons@1.8.0/svg/arrow-up.svg"
+          src={`https://unpkg.com/pixelarticons@1.8.0/svg/${
+            isTopZone ? "arrow-down" : "arrow-up"
+          }.svg`}
           sx={{
             filter: "brightness(0) invert(1)",
             height: "1.25rem",

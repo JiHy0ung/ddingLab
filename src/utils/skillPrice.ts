@@ -7,5 +7,6 @@ export const calculateSkillPrice = (
 ) => {
   const moneyBonus = skillBonuses.moneyMaking[moneyMakingLv] || 0;
   const potBonus = skillBonuses.fullPot[fullPotLv] || 0;
-  return Math.round(basePrice * (1 + moneyBonus + potBonus));
+
+  return Math.round(basePrice * (1 + moneyBonus) * (1 + potBonus));
 };

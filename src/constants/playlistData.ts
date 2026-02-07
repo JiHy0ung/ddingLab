@@ -1,4 +1,14 @@
 export const PLAYLIST = [
+  { id: "bxSr1SZaAKk", title: "Hold Me Now", artist: "소찬휘" },
+  { id: "hfO7veqkHns", title: "GOOD STUFF (KARINA Solo)", artist: "aespa" },
+  {
+    id: "Ws7qykbmAN8",
+    title: "O.O Part 2 (Superhero)",
+    artist: "NMIXX(엔믹스)",
+  },
+  { id: "hfO7veqkHns", title: "GOOD STUFF (KARINA Solo)", artist: "aespa" },
+  { id: "H3ZV6Bv0BPg", title: "Ex-Otogibanashi", artist: "ryo (supercell)" },
+  { id: "DrauxCpwOUo", title: "Cocktail Dress", artist: "츄(CHUU)" },
   {
     id: "7UK-64uhfII",
     title: "World is mine",

@@ -39,6 +39,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 677 },
     { date: "2026-02-01", price: 309 },
     { date: "2026-02-03", price: 608 },
+    { date: "2026-02-06", price: 673 },
   ],
   "어니언 링": [
     { date: "2025-11-01", price: 792 },
@@ -75,6 +76,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 474 },
     { date: "2026-02-01", price: 426 },
     { date: "2026-02-03", price: 857 },
+    { date: "2026-02-06", price: 575 },
   ],
   "갈릭 케이크": [
     { date: "2025-11-01", price: 464 },
@@ -111,6 +113,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 395 },
     { date: "2026-02-01", price: 525 },
     { date: "2026-02-03", price: 529 },
+    { date: "2026-02-06", price: 502 },
   ],
   "삼겹살 토마토 찌개": [
     { date: "2025-11-01", price: 1009 },
@@ -147,6 +150,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1207 },
     { date: "2026-02-01", price: 1817 },
     { date: "2026-02-03", price: 992 },
+    { date: "2026-02-06", price: 1971 },
   ],
   "삼색 아이스크림": [
     { date: "2025-11-01", price: 1413 },
@@ -183,6 +187,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1983 },
     { date: "2026-02-01", price: 1053 },
     { date: "2026-02-03", price: 1327 },
+    { date: "2026-02-06", price: 1288 },
   ],
   "마늘 양갈비 핫도그": [
     { date: "2025-11-01", price: 1300 },
@@ -219,6 +224,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1321 },
     { date: "2026-02-01", price: 750 },
     { date: "2026-02-03", price: 708 },
+    { date: "2026-02-06", price: 1551 },
   ],
   "달콤 시리얼": [
     { date: "2025-12-09", price: 628 },
@@ -242,6 +248,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1079 },
     { date: "2026-02-01", price: 1203 },
     { date: "2026-02-03", price: 1235 },
+    { date: "2026-02-06", price: 1367 },
   ],
   "로스트 치킨 파이": [
     { date: "2025-12-09", price: 1023 },
@@ -265,6 +272,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1819 },
     { date: "2026-02-01", price: 1150 },
     { date: "2026-02-03", price: 883 },
+    { date: "2026-02-06", price: 705 },
   ],
   "스윗 치킨 햄버거": [
     { date: "2025-11-01", price: 1296 },
@@ -301,6 +309,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1075 },
     { date: "2026-02-01", price: 1450 },
     { date: "2026-02-03", price: 1115 },
+    { date: "2026-02-06", price: 2129 },
   ],
   "토마토 파인애플 피자": [
     { date: "2025-11-01", price: 2144 },
@@ -337,6 +346,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1073 },
     { date: "2026-02-01", price: 3446 },
     { date: "2026-02-03", price: 1570 },
+    { date: "2026-02-06", price: 1722 },
   ],
   "양파 수프": [
     { date: "2025-11-01", price: 1618 },
@@ -373,6 +383,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1170 },
     { date: "2026-02-01", price: 2539 },
     { date: "2026-02-03", price: 2837 },
+    { date: "2026-02-06", price: 1750 },
   ],
   "허브 삼겹살 찜": [
     { date: "2025-12-09", price: 1802 },
@@ -396,6 +407,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1432 },
     { date: "2026-02-01", price: 1002 },
     { date: "2026-02-03", price: 1347 },
+    { date: "2026-02-06", price: 1105 },
   ],
   "토마토 라자냐": [
     { date: "2025-11-01", price: 2759 },
@@ -432,6 +444,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 2505 },
     { date: "2026-02-01", price: 2828 },
     { date: "2026-02-03", price: 2760 },
+    { date: "2026-02-06", price: 2622 },
   ],
   "딥 크림 빠네": [
     { date: "2025-12-09", price: 1405 },
@@ -455,6 +468,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1575 },
     { date: "2026-02-01", price: 1308 },
     { date: "2026-02-03", price: 1859 },
+    { date: "2026-02-06", price: 1890 },
   ],
   "트리플 소갈비 꼬치": [
     { date: "2025-12-09", price: 3711 },
@@ -478,6 +492,7 @@ export const FoodPriceData: Record<
     { date: "2026-01-30", price: 1665 },
     { date: "2026-02-01", price: 1334 },
     { date: "2026-02-03", price: 3163 },
+    { date: "2026-02-06", price: 1841 },
   ],
 };
 

@@ -1,4 +1,5 @@
 export const PLAYLIST = [
+  { id: "sw0sGSGFgg8", title: "in your heart", artist: "IVE 레이" },
   { id: "bxSr1SZaAKk", title: "Hold Me Now", artist: "소찬휘" },
   { id: "hfO7veqkHns", title: "GOOD STUFF (KARINA Solo)", artist: "aespa" },
   {

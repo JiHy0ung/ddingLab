@@ -1,4 +1,14 @@
-import { Box, Typography, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { RECIPES } from "../../../constants/foodRecipeData";
@@ -31,6 +41,10 @@ import { RotateCw } from "lucide-react";
 import { skillBonuses } from "../../../constants/skillBonuses";
 import { calculateSkillPrice } from "../../../utils/skillPrice";
 import { useSkillStore } from "../../../stores/skillStore";
+import { addPriceRecords } from "../../../services/foodService";
+import { useUserRole } from "../../../hooks/useUserRole";
+import { useQueryClient } from "@tanstack/react-query";
+import CommonSnackbar from "../../../common/components/CommonSnackBar";
 
 const CalculatorContainer = styled(Box)({
   display: "flex",
@@ -246,6 +260,48 @@ const ProfitRateText = styled(Typography)<{ isNegative?: boolean }>(
   }),
 );
 
+const SubmitContainer = styled(Box)({
+  width: "90%",
+  maxWidth: "50rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: "1.625rem",
+});
+
+const SubmitButton = styled(Button)({
+  width: "100%",
+  fontFamily: "Galmuri11",
+  fontSize: "0.875rem",
+  padding: "0.5rem 1rem",
+  backgroundColor: "#222",
+  color: "white",
+  border: "2px solid #222",
+  borderRadius: 0,
+  boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
+
+  "&:hover": {
+    backgroundColor: "#313131",
+    border: "2px solid #313131",
+  },
+
+  "&:active": {
+    backgroundColor: "white",
+    color: "black",
+    boxShadow: "1px 1px 0px rgba(0, 0, 0, 1)",
+    transform: "translate(1px, 1px)",
+  },
+});
+
+const SubmitDialog = styled(Dialog)({
+  "& .MuiPaper-root": {
+    borderRadius: 0,
+    border: "3px solid #222",
+    boxShadow: "4px 4px 0px rgba(0, 0, 0, 1)",
+    fontFamily: "Galmuri11",
+  },
+});
+
 const foodImages: Record<string, string> = {
   "토마토 스파게티": TomatoSpaghetti,
   "어니언 링": OnionRings,
@@ -274,6 +330,26 @@ const RecipeEfficiencyCalculator = () => {
     setFullPotLv,
     resetSkills,
   } = useSkillStore();
+
+  const { isCook, loading: roleLoading } = useUserRole();
+  const queryClient = useQueryClient();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+  const openSnackbar = (
+    message: string,
+    severity: "success" | "error" | "warning" | "info" = "info",
+  ) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
 
   // localStorage에서 가격 불러오기
   const [prices, setPrices] = useState<Record<string, number>>(() => {
@@ -341,6 +417,75 @@ const RecipeEfficiencyCalculator = () => {
   });
 
   const hasSkill = moneyMakingLv > 0 || fullPotLv > 0;
+
+  // 가격 변동일 체크 함수
+  const isValidPriceChangeDate = (): boolean => {
+    const now = new Date();
+    const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+
+    const day = kstNow.getUTCDate();
+    const hour = kstNow.getUTCHours();
+
+    const validDays = [1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30];
+
+    return validDays.includes(day) && hour >= 3;
+  };
+
+  const handleSubmitPrices = () => {
+    if (!isValidPriceChangeDate()) {
+      openSnackbar(
+        "가격은 1,3,6,9,12,15,18,21,24,27,30일 오전 3시 이후에만 등록 가능합니다.",
+        "warning",
+      );
+      return;
+    }
+
+    const foodList = Object.keys(RECIPES);
+
+    const missingFoods = foodList.filter(
+      (foodName) => !prices[foodName] || prices[foodName] <= 0,
+    );
+
+    if (missingFoods.length > 0) {
+      openSnackbar(
+        `${missingFoods.length}개의 요리 가격이 입력되지 않았습니다.`,
+        "error",
+      );
+      return;
+    }
+
+    setConfirmOpen(true);
+  };
+
+  const executeSubmit = async () => {
+    setConfirmOpen(false);
+    setIsSubmitting(true);
+
+    try {
+      const now = new Date();
+      const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+      const dateStr = kstDate.toISOString().split("T")[0];
+
+      const foodList = Object.keys(RECIPES);
+
+      await addPriceRecords(
+        foodList.map((foodName) => [foodName, prices[foodName]]),
+        dateStr,
+      );
+
+      queryClient.invalidateQueries({ queryKey: ["foodPriceRecords"] });
+
+      openSnackbar("가격이 성공적으로 등록되었습니다!", "success");
+    } catch (error: any) {
+      if (error.message?.includes("duplicate")) {
+        openSnackbar("이미 오늘 날짜로 등록된 가격이 있습니다.", "warning");
+      } else {
+        openSnackbar("가격 등록 실패: " + error.message, "error");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <CalculatorContainer>
@@ -486,6 +631,18 @@ const RecipeEfficiencyCalculator = () => {
         </ControlsContainer>
       </ControlPanel>
 
+      {!roleLoading && isCook && (
+        <SubmitContainer>
+          <SubmitButton
+            disableRipple
+            onClick={handleSubmitPrices}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "등록 중..." : "가격 등록하기"}
+          </SubmitButton>
+        </SubmitContainer>
+      )}
+
       <TableContainer>
         <TableHeader>
           <Box
@@ -617,6 +774,75 @@ const RecipeEfficiencyCalculator = () => {
           );
         })}
       </TableContainer>
+      <CommonSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        onClose={() => setSnackbarOpen(false)}
+      />
+
+      <SubmitDialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+        <DialogTitle
+          sx={{
+            fontFamily: "Galmuri11",
+            fontWeight: 700,
+            fontSize: "1.2rem",
+            borderBottom: "2px solid #222",
+          }}
+        >
+          가격 등록 확인
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            sx={{
+              fontFamily: "Galmuri11",
+              fontSize: "0.9rem",
+              color: "#333",
+              marginTop: "0.5rem",
+            }}
+          >
+            {Object.keys(RECIPES).length}개 요리의 가격을 등록하시겠습니까?
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions sx={{ padding: "1rem" }}>
+          <Button
+            onClick={() => setConfirmOpen(false)}
+            sx={{
+              fontFamily: "Galmuri11",
+              border: "2px solid #222",
+              borderRadius: 0,
+              color: "#222",
+            }}
+          >
+            취소
+          </Button>
+
+          <Button
+            onClick={executeSubmit}
+            disabled={isSubmitting}
+            sx={{
+              fontFamily: "Galmuri11",
+              backgroundColor: "#222",
+              color: "white",
+              border: "2px solid #222",
+              borderRadius: 0,
+              boxShadow: "2px 2px 0px rgba(0, 0, 0, 1)",
+              "&:hover": {
+                backgroundColor: "#313131",
+              },
+              "&:active": {
+                backgroundColor: "white",
+                color: "black",
+                boxShadow: "1px 1px 0px rgba(0, 0, 0, 1)",
+                transform: "translate(1px, 1px)",
+              },
+            }}
+          >
+            등록
+          </Button>
+        </DialogActions>
+      </SubmitDialog>
     </CalculatorContainer>
   );
 };

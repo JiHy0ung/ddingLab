@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import Hero from "./components/Hero";
 import NoticeBoard from "./components/NoticeBoard";
 import UpdateNote from "./components/UpdateNote";
+import WorldMap from "./components/WorldMap";
 
 const LandingContainer = styled(Box)(({ theme }) => ({
   width: "100%",
@@ -49,6 +50,7 @@ const LandingPage = () => {
         <OhaasaRanking />
         <NoticeBoard />
       </Box>
+      <WorldMap />
     </LandingContainer>
   );
 };

@@ -26,11 +26,14 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   IconButton,
+  Skeleton,
 } from "@mui/material";
 import { RotateCw } from "lucide-react";
 import { skillBonuses } from "../../../constants/skillBonuses";
 import { calculateSkillPrice } from "../../../utils/skillPrice";
 import { useSkillStore } from "../../../stores/skillStore";
+import { getFoodPriceRecords } from "../../../services/foodService";
+import { useFoodData } from "../../../hooks/useFoodData";
 
 // 주간/월간 데이터 필터링
 const filterDataByPeriod = (data, period, selectedYear?, selectedMonth?) => {
@@ -264,8 +267,22 @@ const ChartContainer = styled("div")<{ isScrollable: boolean }>(
   }),
 );
 
+const FoodChartSkeleton = styled(Skeleton)({
+  width: "100%",
+  height: "435px",
+});
 const CookingPriceChart = () => {
   const selectedFood = useFoodStore((state) => state.selectedFood);
+
+  const { data: foodData, isLoading, error } = useFoodData(selectedFood);
+
+  const allData = foodData?.prices || [];
+
+  console.log("selectedFood:", selectedFood);
+  console.log("foodData:", foodData);
+  console.log("isLoading:", isLoading);
+  console.log("error:", error);
+
   const {
     moneyMakingLv,
     fullPotLv,
@@ -275,8 +292,6 @@ const CookingPriceChart = () => {
   } = useSkillStore();
 
   const [period, setPeriod] = useState("month");
-
-  const allData = FoodPriceData[selectedFood as keyof typeof FoodPriceData];
 
   // 사용 가능한 년도/월 계산
   const { years, monthsMap } = getAvailableYearsAndMonths(allData);
@@ -335,6 +350,10 @@ const CookingPriceChart = () => {
       setSelectedMonth(months[0]);
     }
   }, [selectedYear]);
+
+  if (error) {
+    return <Box>에러 발생</Box>;
+  }
 
   return (
     <PriceChartContainer>
@@ -579,142 +598,146 @@ const CookingPriceChart = () => {
       </ControlPanelContainer>
 
       {/* 차트 */}
-      <ChartContainer isScrollable={period === "all"}>
-        <ChartWrapper>
-          {data.length > 0 ? (
-            <ResponsiveContainer
-              width={
-                period === "all" ? Math.max(data.length * 60, 1200) : "100%"
-              }
-              height={400}
-            >
-              <LineChart
-                data={data}
-                margin={{ top: 20, right: 20, left: 10, bottom: 10 }}
+      {isLoading ? (
+        <FoodChartSkeleton variant="rectangular" />
+      ) : (
+        <ChartContainer isScrollable={period === "all"}>
+          <ChartWrapper>
+            {data.length > 0 ? (
+              <ResponsiveContainer
+                width={
+                  period === "all" ? Math.max(data.length * 60, 1200) : "100%"
+                }
+                height={400}
               >
-                <CartesianGrid strokeDasharray="1 2" stroke="#e4e4e4ff" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={formatDate}
-                  style={{ fontSize: "12px" }}
-                  tickMargin={10}
-                />
-                <YAxis
-                  domain={yAxisDomain}
-                  style={{ fontSize: "12px" }}
-                  tickFormatter={(value) => `${value.toLocaleString()}G`}
-                  tickMargin={5}
-                />
-                <Tooltip
-                  formatter={(value, name, props) => {
-                    const { payload } = props;
-                    const basePrice = payload.basePrice;
-                    const skillPrice = payload.price;
-
-                    if (hasSkill) {
-                      return [
-                        <Box key="tooltip">
-                          <Typography
-                            sx={{
-                              fontFamily: "Galmuri11, monospace",
-                              fontSize: "0.75rem",
-                            }}
-                          >
-                            기본가: {basePrice.toLocaleString()}G
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontFamily: "Galmuri11, monospace",
-                              fontWeight: 700,
-                              fontSize: "0.875rem",
-                            }}
-                          >
-                            스킬 적용가: {skillPrice.toLocaleString()}G
-                          </Typography>
-                        </Box>,
-                      ];
-                    }
-
-                    return [`${skillPrice.toLocaleString()}G`, "가격"];
-                  }}
-                  labelFormatter={(label) => formatDate(label)}
-                  labelStyle={{
-                    fontSize: "0.875rem",
-                    color: "#2f2f2fff",
-                    fontWeight: "600",
-                  }}
-                  contentStyle={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    gap: "0.25rem",
-                    padding: "0.5rem 0.625rem",
-                    backgroundColor: "rgba(255, 255, 255, 0.95)",
-                    border: "1.5px solid #000000",
-                    borderRadius: "0.1rem",
-                    fontSize: "0.75rem",
-                    fontFamily: "Galmuri11, monospace",
-                  }}
-                />
-
-                <ReferenceLine
-                  y={skillShopRange.max}
-                  stroke="#3b3b3bff"
-                  strokeDasharray="5 3"
-                  strokeWidth={1.5}
+                <LineChart
+                  data={data}
+                  margin={{ top: 20, right: 20, left: 10, bottom: 10 }}
                 >
-                  <Label
-                    value={`역대 최고가 ${skillShopRange.max.toLocaleString()}G`}
-                    position="insideTopRight"
-                    fill="#3b3b3bff"
-                    style={{ fontSize: "12px", fontWeight: "bold" }}
+                  <CartesianGrid strokeDasharray="1 2" stroke="#e4e4e4ff" />
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={formatDate}
+                    style={{ fontSize: "12px" }}
+                    tickMargin={10}
                   />
-                </ReferenceLine>
-
-                <ReferenceLine
-                  y={skillShopRange.min}
-                  stroke="#3b3b3bff"
-                  strokeDasharray="5 3"
-                  strokeWidth={1.5}
-                >
-                  <Label
-                    value={`역대 최저가 ${skillShopRange.min.toLocaleString()}G`}
-                    position="insideBottomRight"
-                    fill="#3b3b3bff"
-                    style={{ fontSize: "12px", fontWeight: "bold" }}
+                  <YAxis
+                    domain={yAxisDomain}
+                    style={{ fontSize: "12px" }}
+                    tickFormatter={(value) => `${value.toLocaleString()}G`}
+                    tickMargin={5}
                   />
-                </ReferenceLine>
+                  <Tooltip
+                    formatter={(value, name, props) => {
+                      const { payload } = props;
+                      const basePrice = payload.basePrice;
+                      const skillPrice = payload.price;
 
-                <Line
-                  type="linear"
-                  stroke={lineColor}
-                  dataKey="price"
-                  fill={lineColor}
-                  dot={{ fill: lineColor, r: 0 }}
-                  strokeWidth={2}
-                  activeDot={{
-                    r: 6,
-                    style: { cursor: "pointer" },
-                  }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          ) : (
-            <div
-              style={{
-                height: "400px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#999",
-                fontSize: "16px",
-              }}
-            >
-              선택한 기간에 데이터가 없습니다
-            </div>
-          )}
-        </ChartWrapper>
-      </ChartContainer>
+                      if (hasSkill) {
+                        return [
+                          <Box key="tooltip">
+                            <Typography
+                              sx={{
+                                fontFamily: "Galmuri11, monospace",
+                                fontSize: "0.75rem",
+                              }}
+                            >
+                              기본가: {basePrice.toLocaleString()}G
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontFamily: "Galmuri11, monospace",
+                                fontWeight: 700,
+                                fontSize: "0.875rem",
+                              }}
+                            >
+                              스킬 적용가: {skillPrice.toLocaleString()}G
+                            </Typography>
+                          </Box>,
+                        ];
+                      }
+
+                      return [`${skillPrice.toLocaleString()}G`, "가격"];
+                    }}
+                    labelFormatter={(label) => formatDate(label)}
+                    labelStyle={{
+                      fontSize: "0.875rem",
+                      color: "#2f2f2fff",
+                      fontWeight: "600",
+                    }}
+                    contentStyle={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      gap: "0.25rem",
+                      padding: "0.5rem 0.625rem",
+                      backgroundColor: "rgba(255, 255, 255, 0.95)",
+                      border: "1.5px solid #000000",
+                      borderRadius: "0.1rem",
+                      fontSize: "0.75rem",
+                      fontFamily: "Galmuri11, monospace",
+                    }}
+                  />
+
+                  <ReferenceLine
+                    y={skillShopRange.max}
+                    stroke="#3b3b3bff"
+                    strokeDasharray="5 3"
+                    strokeWidth={1.5}
+                  >
+                    <Label
+                      value={`역대 최고가 ${skillShopRange.max.toLocaleString()}G`}
+                      position="insideTopRight"
+                      fill="#3b3b3bff"
+                      style={{ fontSize: "12px", fontWeight: "bold" }}
+                    />
+                  </ReferenceLine>
+
+                  <ReferenceLine
+                    y={skillShopRange.min}
+                    stroke="#3b3b3bff"
+                    strokeDasharray="5 3"
+                    strokeWidth={1.5}
+                  >
+                    <Label
+                      value={`역대 최저가 ${skillShopRange.min.toLocaleString()}G`}
+                      position="insideBottomRight"
+                      fill="#3b3b3bff"
+                      style={{ fontSize: "12px", fontWeight: "bold" }}
+                    />
+                  </ReferenceLine>
+
+                  <Line
+                    type="linear"
+                    stroke={lineColor}
+                    dataKey="price"
+                    fill={lineColor}
+                    dot={{ fill: lineColor, r: 0 }}
+                    strokeWidth={2}
+                    activeDot={{
+                      r: 6,
+                      style: { cursor: "pointer" },
+                    }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div
+                style={{
+                  height: "400px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#999",
+                  fontSize: "16px",
+                }}
+              >
+                선택한 기간에 데이터가 없습니다
+              </div>
+            )}
+          </ChartWrapper>
+        </ChartContainer>
+      )}
     </PriceChartContainer>
   );
 };

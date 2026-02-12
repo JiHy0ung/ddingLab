@@ -25,6 +25,7 @@ import { RECIPES } from "../../constants/foodRecipeData";
 import { FoodFixedRange, FoodPriceData } from "../../constants/foodPriceData";
 import FoodPriceChart from "./components/FoodPriceChart";
 import RecipeEfficiencyCalculator from "./components/RecipeEfficiencyCalculator";
+import { useFoodData } from "../../hooks/useFoodData";
 
 interface FoodItemProps {
   title: string;
@@ -306,14 +307,46 @@ const CookingPage = () => {
   const min = FoodFixedRange[selectedFood].min;
   const max = FoodFixedRange[selectedFood].max;
 
-  const allData = FoodPriceData[selectedFood as keyof typeof FoodPriceData];
+  const { data: foodData, isLoading, error } = useFoodData(selectedFood);
 
-  const currentPrice = allData[allData.length - 1].price;
-  const priceGap =
-    allData[allData.length - 1].price - allData[allData.length - 2].price;
+  const allData = foodData?.prices ?? [];
 
-  const direction = getPriceDirection(allData);
+  const hasEnoughData = allData.length >= 2;
+
+  const currentPrice =
+    allData.length > 0 ? allData[allData.length - 1].price : 0;
+
+  const priceGap = hasEnoughData
+    ? allData[allData.length - 1].price - allData[allData.length - 2].price
+    : 0;
+
+  const direction: PriceDirection = hasEnoughData
+    ? getPriceDirection(allData)
+    : "same";
+
   const priceChangeColor = getPriceChangeColor(direction);
+
+  if (isLoading) {
+    return (
+      <CookingContainer>
+        <CookingTitle>요리 리딩방</CookingTitle>
+        <Typography sx={{ fontFamily: "Galmuri11" }}>
+          가격 데이터를 불러오는 중...
+        </Typography>
+      </CookingContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <CookingContainer>
+        <CookingTitle>요리 리딩방</CookingTitle>
+        <Typography sx={{ fontFamily: "Galmuri11", color: "red" }}>
+          가격 데이터를 불러오지 못했습니다.
+        </Typography>
+      </CookingContainer>
+    );
+  }
 
   return (
     <CookingContainer>

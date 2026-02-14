@@ -1,4 +1,7 @@
 export const PLAYLIST = [
+  { id: "C77DJ8nySoo", title: "재", artist: "한로로" },
+  { id: "iMaJielWKnI", title: "Every Heart", artist: "BoA" },
+  { id: "b60RXXBik1w", title: "CINEMA", artist: "WOODZ" },
   { id: "3DKIs5xvoCY", title: "Angel #48", artist: "aespa" },
   { id: "8kzI_4qmrCI", title: "Baby", artist: "베이비복스" },
   { id: "9qkpcLK422o", title: "BANG BANG", artist: "IVE" },

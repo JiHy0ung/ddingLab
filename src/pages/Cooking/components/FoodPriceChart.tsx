@@ -336,8 +336,8 @@ const CookingPriceChart = () => {
   const yAxisDomain =
     data.length > 0
       ? [
-          skillShopRange.min,
-          Math.ceil(Math.max(stats.maxPrice, skillShopRange.max) * 1.05),
+          allStats.minPrice,
+          Math.ceil(Math.max(stats.maxPrice, allStats.maxPrice) * 1.05),
         ]
       : [0, 100];
 
@@ -680,13 +680,13 @@ const CookingPriceChart = () => {
                   />
 
                   <ReferenceLine
-                    y={skillShopRange.max}
+                    y={allStats.maxPrice}
                     stroke="#3b3b3bff"
                     strokeDasharray="5 3"
                     strokeWidth={1.5}
                   >
                     <Label
-                      value={`역대 최고가 ${skillShopRange.max.toLocaleString()}G`}
+                      value={`역대 최고가 ${allStats.maxPrice.toLocaleString()}G`}
                       position="insideTopRight"
                       fill="#3b3b3bff"
                       style={{ fontSize: "12px", fontWeight: "bold" }}
@@ -694,13 +694,13 @@ const CookingPriceChart = () => {
                   </ReferenceLine>
 
                   <ReferenceLine
-                    y={skillShopRange.min}
+                    y={allStats.minPrice}
                     stroke="#3b3b3bff"
                     strokeDasharray="5 3"
                     strokeWidth={1.5}
                   >
                     <Label
-                      value={`역대 최저가 ${skillShopRange.min.toLocaleString()}G`}
+                      value={`역대 최저가 ${allStats.minPrice.toLocaleString()}G`}
                       position="insideBottomRight"
                       fill="#3b3b3bff"
                       style={{ fontSize: "12px", fontWeight: "bold" }}
